@@ -1,6 +1,7 @@
 # DelphiConsole
 The Console class from C# ported to Delphi
 
+<pre>
 /*=============================================================================
 **
 ** Class: Console
@@ -11,3 +12,4 @@ The Console class from C# ported to Delphi
 **
 **
 =============================================================================*/
+<pre>
