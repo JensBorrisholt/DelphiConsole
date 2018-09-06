@@ -299,7 +299,7 @@ type
     class procedure Write(Value: Variant); overload; static;
     class procedure Write(Value: Variant; Args: array of const); overload; static;
     class procedure WriteLine(Value: Variant); overload; static;
-    class procedure WriteLine(Value: Variant; Args: array of Variant); overload; static;
+    class procedure WriteLine(FormatString: String; Args: array of Variant); overload; static;
     class procedure WriteLine; overload; static;
 
     // properties
@@ -1080,25 +1080,26 @@ begin
   System.Write(Format(S, Args));
 end;
 
-class procedure Console.WriteLine(Value: Variant; Args: array of Variant);
+class procedure Console.WriteLine(FormatString: String; Args: array of Variant);
 var
-  S: string;
-  VarRecArray: array of TVarRec;
   I: Integer;
+  VarRecArray: array of TVarRec;
 begin
-  S := Value;
   for I := 0 to high(Args) do
-    S := ReplaceStr(S, '{' + I.ToString + '}', '%' + I.ToString + ':s');
+    FormatString := ReplaceStr(FormatString, '{' + I.ToString + '}', '%' + I.ToString + ':s');
 
   SetLength(VarRecArray, Length(Args));
 
   for I := 0 to high(Args) do
   begin
+
     VarRecArray[I].VType := vtUnicodeString;
-    VarRecArray[I].VUnicodeString := pointer(string(Args[I]));
+    // nil out first, so no attempt to decrement reference count.
+    VarRecArray[I].VUnicodeString := nil;
+    UnicodeString(VarRecArray[I].VUnicodeString) := UnicodeString(Args[I]);
   end;
 
-  System.WriteLn(Format(S, VarRecArray));
+  Writeln(Format(FormatString, VarRecArray));
 end;
 
 class procedure Console.WriteLine;
