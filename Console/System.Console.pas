@@ -226,6 +226,7 @@ type
     class procedure SetConsoleOutputHandle(const Value: THandle); static;
     class procedure SetConsoleRect(Rect: TRect);
   strict private
+    class function GenericToString<T>(AValue: T): string;
     class function GetConsoleRedirected(const Index: Integer): Boolean; static;
     class function GetBackgroundColor: TConsoleColor; static;
     class procedure SetBackgroundColor(const Value: TConsoleColor); static;
@@ -296,9 +297,9 @@ type
     class procedure SetBufferSize(Width, Height: Integer); overload; static;
     class procedure SetWindowPosition(Left, Top: Integer);
     class procedure SetWindowSize(Width, Height: Integer); static;
-    class procedure Write(Value: Variant); overload; static;
+    class procedure Write<T>(AValue: T);overload; static;
     class procedure Write(Value: Variant; Args: array of const); overload; static;
-    class procedure WriteLine(Value: Variant); overload; static;
+    class procedure WriteLine<T>(AValue: T); overload; static;
     class procedure WriteLine(FormatString: String; Args: array of Variant); overload; static;
     class procedure WriteLine; overload; static;
 
@@ -334,7 +335,7 @@ type
 implementation
 
 uses
-  System.StrUtils;
+  System.StrUtils, System.RTTI, System.TypInfo;
 
 var
   LockObject: TObject;
@@ -477,6 +478,48 @@ end;
 class procedure Console.DeleteLine;
 begin
   ScrollScreenBuffer(FTextWindow.Left, GetBufferInfo.dwCursorPosition.Y, FTextWindow.Right, FTextWindow.Bottom, -1);
+end;
+
+class function Console.GenericToString<T>(AValue: T): string;
+var
+  ElementValue, Value: TValue;
+  Data: PTypeData;
+  i: Integer;
+  AContext: TRttiContext;
+  ARecord: TRttiRecordType;
+begin
+  Value := TValue.From(AValue);
+
+  if Value.IsArray then
+  begin
+    if Value.GetArrayLength = 0 then
+      exit('[ø]');
+
+    Result := '[';
+
+    for i := 0 to Value.GetArrayLength - 1 do
+    begin
+      ElementValue := Value.GetArrayElement(i);
+      Result := Result + ElementValue.ToString + ',';
+    end;
+
+    Result[Length(Result)] := ']';
+    exit;
+  end;
+
+  Data := GetTypeData(Value.TypeInfo);
+
+  if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
+    exit(Format('0x%p %s', [pointer(Value.AsObject), TValue.From(Data^.ClassType).ToString]));
+
+  if Value.TypeInfo^.Kind = tkRecord then
+  begin
+    AContext := TRttiContext.Create;
+    ARecord := AContext.GetType(Value.TypeInfo).AsRecord;
+    Exit(Format('0x%p (Record ''%s'' @ %p)', [Value.GetReferenceToRawData, ARecord.Name, Data]));
+  end;
+
+  Result := Value.ToString;
 end;
 
 class function Console.GetBackgroundColor: TConsoleColor;
@@ -1058,14 +1101,14 @@ begin
   SetWindowSize(Value, WindowHeight);
 end;
 
-class procedure Console.WriteLine(Value: Variant);
+class procedure Console.WriteLine<T>(AValue: T);
 begin
-  System.WriteLn(Value);
+  System.WriteLn(GenericToString(AValue));
 end;
 
-class procedure Console.Write(Value: Variant);
+class procedure Console.Write<T>(AValue: T);
 begin
-  System.Write(Value);
+  System.Write(GenericToString(AValue));
 end;
 
 class procedure Console.Write(Value: Variant; Args: array of const);
