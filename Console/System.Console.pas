@@ -743,10 +743,10 @@ begin
     ReadRegion.Top := (SourceTop);
     ReadRegion.Bottom := (((SourceTop + SourceHeight) - 1));
 
-    bufferCoord.X := 7;
-    bufferCoord.Y := 7;
+    bufferCoord.X := 0;
+    bufferCoord.Y := 0;
 
-    if (not ReadConsoleOutput(ConsoleOutputHandle, @CharInfoRef, dwSize, bufferCoord, ReadRegion)) then
+    if (not ReadConsoleOutput(ConsoleOutputHandle, CharInfoArray, dwSize, bufferCoord, ReadRegion)) then
       RaiseLastOSError;
 
     dwWriteCoord.X := SourceLeft;
@@ -769,7 +769,7 @@ begin
     WriteRegion.Top := TargetTop;
     WriteRegion.Bottom := TargetTop + SourceHeight;
 
-    Win32Check(WriteConsoleOutput(ConsoleOutputHandle, @CharInfoRef2, dwSize, bufferCoord, WriteRegion));
+    Win32Check(WriteConsoleOutput(ConsoleOutputHandle, CharInfoArray, dwSize, bufferCoord, WriteRegion));
   end
 end;
 
