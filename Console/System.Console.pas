@@ -1,4 +1,4 @@
-unit System.Console;
+﻿unit System.Console;
 
 interface
 
@@ -217,6 +217,7 @@ type
     class function ConsoleCursorInfo: TConsoleCursorInfo;
     class function ConsoleRect: TRect;
     class function GetBufferInfo: TConsoleScreenBufferInfo; static;
+    class function CanGetBufferInfo : Boolean; static;
     class function GetConsoleOutputHandle: THandle; static;
     class function ScreenHeight: SmallInt;
     class function ScreenWidth: SmallInt;
@@ -278,7 +279,7 @@ type
 
     // Initialize
     class constructor Create;
-
+    class procedure AttachConsole;
     // Methods
     class procedure Beep(Frequency, Duration: Cardinal); overload; static;
     class procedure Beep; overload; static;
@@ -444,7 +445,7 @@ begin
   Result := (FileType = FILE_TYPE_PIPE) or (FileType = FILE_TYPE_DISK);
 end;
 
-class constructor Console.Create;
+class procedure Console.AttachConsole;
 var
   BufferInfo: TConsoleScreenBufferInfo;
 begin
@@ -475,6 +476,12 @@ begin
   FScreenSize.Y := BufferInfo.srWindow.Bottom - BufferInfo.srWindow.Top + 1;
 end;
 
+class constructor Console.Create;
+begin
+  if Console.CanGetBufferInfo
+  then Console.AttachConsole;
+end;
+
 class procedure Console.DeleteLine;
 begin
   ScrollScreenBuffer(FTextWindow.Left, GetBufferInfo.dwCursorPosition.Y, FTextWindow.Right, FTextWindow.Bottom, -1);
@@ -493,7 +500,7 @@ begin
   if Value.IsArray then
   begin
     if Value.GetArrayLength = 0 then
-      exit('[�]');
+      exit('[ø]');
 
     Result := '[';
 
@@ -530,6 +537,13 @@ end;
 class function Console.GetBufferHeight: Integer;
 begin
   Result := GetBufferSize.Y;
+end;
+
+class function Console.CanGetBufferInfo : Boolean;
+var
+  dummy : TConsoleScreenBufferInfo;
+begin
+  result := GetConsoleScreenBufferInfo(ConsoleOutputHandle, dummy);
 end;
 
 class function Console.GetBufferInfo: TConsoleScreenBufferInfo;
@@ -935,7 +949,7 @@ end;
 
 class procedure Console.SetConsoleRect(Rect: TRect);
 begin
-  SetWindowPos(GetConsoleWindow, 0, Rect.Left, Rect.Right, Rect.Top, Rect.Bottom, SWP_SHOWWINDOW);
+  SetWindowPos(GetConsoleWindow, 0, Rect.Left, Rect.Top, Rect.Right, Rect.Bottom, SWP_SHOWWINDOW);
 end;
 
 class procedure Console.SetCursorLeft(const Value: Integer);
