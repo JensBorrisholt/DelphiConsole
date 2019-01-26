@@ -1,4 +1,4 @@
-unit System.Console;
+﻿unit System.Console;
 
 interface
 
@@ -949,7 +949,7 @@ end;
 
 class procedure Console.SetConsoleRect(Rect: TRect);
 begin
-  SetWindowPos(GetConsoleWindow, 0, Rect.Left, Rect.Right, Rect.Top, Rect.Bottom, SWP_SHOWWINDOW);
+  SetWindowPos(GetConsoleWindow, 0, Rect.Left, Rect.Top, Rect.Right, Rect.Bottom, SWP_SHOWWINDOW);
 end;
 
 class procedure Console.SetCursorLeft(const Value: Integer);
