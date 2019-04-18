@@ -13,12 +13,13 @@ uses
 var
   Command, CommandParameters: string;
   InputArray: TArray<string>;
+
 begin
   Console.WriteLine('Welcome to test console app, type help to get some help!');
 
   while True do
   begin
-    InputArray := Console.ReadLine.Split([' ']);
+    InputArray := Console.ReadLine.Split([' ', sLineBreak]);
 
     if Length(InputArray) >= 1 then
       Command := InputArray[0].ToUpper
@@ -30,8 +31,7 @@ begin
     else
       CommandParameters := string.Empty;
 
-
-    case IndexStr(Command, ['EXIT', 'HELP', 'CLS', 'FORECOLOR', 'BACKCOLOR', 'BEEP']) of
+    case IndexStr(Command, ['EXIT', 'HELP', 'CLS', 'FORECOLOR', 'BACKCOLOR', 'BEEP', 'TITLE']) of
       0:
         Exit;
 
@@ -61,13 +61,19 @@ begin
           Console.WriteLine('!!! Parameter not valid');
         end;
 
-        5:
+      5:
         try
-          Console.Beep(StrToint(InputArray[1]),  StrToint(InputArray[2]));
+          Console.Beep(StrToint(InputArray[1]), StrToint(InputArray[2]));
         except
           Console.WriteLine('!!! Parameter not valid');
         end;
 
+      6:
+        try
+          Console.Title := InputArray[1];
+        except
+          Console.WriteLine('!!! Parameter not valid');
+        end;
 
       -1:
         Console.WriteLine('!!! Bad command');

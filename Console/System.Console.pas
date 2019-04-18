@@ -15,35 +15,77 @@ uses
 {$SCOPEDENUMS ON}
 
 type
-  TConsoleColor = (Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White);
+  ECOnsoleError = class(Exception);
+  TConsoleColor = (
+    Black,
+    DarkBlue,
+    DarkGreen,
+    DarkCyan,
+    DarkRed,
+    DarkMagenta,
+    DarkYellow,
+    Gray,
+    DarkGray,
+    Blue,
+    Green,
+    Cyan,
+    Red,
+    Magenta,
+    Yellow,
+    White
+    );
 
-  TConsoleKey = (Backspace = vkBack, Tab = vkTab, Clear = vkClear, Enter = vkReturn, Pause = vkPause, Escape = vkEscape, Spacebar = vkSpace, PageUp = vkPrior, PageDown = vkNext, &End = vkEnd,
-    Home = vkHome, LeftArrow = vkLeft, UpArrow = vkUp, RightArrow = vkRight, DownArrow = vkDown, Select = vkSelect, Print = vkPrint, Execute = vkExecute, PrintScreen = vkSnapshot, Insert = vkInsert,
-    Delete = vkDelete, Help = vkHelp,
+  TConsoleKey = (
+      Backspace = vkBack,
+      Tab = vkTab,
+      Clear = vkClear,
+      Enter = vkReturn,
+      Pause = vkPause,
+      Escape = vkEscape,
+      Spacebar = vkSpace,
+      PageUp = vkPrior,
+      PageDown = vkNext,
+      &End = vkEnd,
+      Home = vkHome,
+      LeftArrow = vkLeft,
+      UpArrow = vkUp,
+      RightArrow = vkRight,
+      DownArrow = vkDown,
+      Select = vkSelect,
+      Print = vkPrint,
+      Execute = vkExecute,
+      PrintScreen = vkSnapshot,
+      Insert = vkInsert,
+      Delete = vkDelete,
+      Help = vkHelp,
 
-    D0 = vk0, D1 = vk1, D2 = vk2, D3 = vk3, D4 = vk4, D5 = vk5, D6 = vk6, D7 = vk7, D8 = vk8, D9 = vk9, A = vkA, B = vkB, C = vkC, D = vkD, E = vkE, F = vkF, G = vkG, H = vkH, I = vkI, J = vkJ,
-    K = vkK, L = vkL, M = vkM, N = vkN, O = vkO, P = vkP, Q = vkQ, R = vkR, S = vkS, T = vkT, U = vkU, V = vkV, W = vkW, X = vkX, Y = vkY, Z = vkZ,
+      D0 = vk0,     D1 = vk1,     D2 = vk2,     D3 = vk3,     D4 = vk4,     D5 = vk5,     D6 = vk6,     D7 = vk7,      D8 = vk8,     D9 = vk9,
+      A = vkA,      B = vkB,      C = vkC,      D = vkD,      E = vkE,      F = vkF,      G = vkG,      H = vkH,       I = vkI,      J = vkJ,
+      K = vkK,      L = vkL,      M = vkM,      N = vkN,      O = vkO,      P = vkP,      Q = vkQ,      R = vkR,       S = vkS,      T = vkT,
+      U = vkU,      V = vkV,      W = vkW,      X = vkX,      Y = vkY,      Z = vkZ,
 
-    LeftWindows = vkLWin, RightWindows = vkRWin, Applications = vkApps, Sleep = vkSleep,
+      LeftWindows = vkLWin,  RightWindows = vkRWin,   Applications = vkApps,   Sleep = vkSleep,
 
-    NumPad0 = vkNumpad0, NumPad1 = vkNumpad1, NumPad2 = vkNumpad2, NumPad3 = vkNumpad3, NumPad4 = vkNumpad4, NumPad5 = vkNumpad5, NumPad6 = vkNumpad6, NumPad7 = vkNumpad7, NumPad8 = vkNumpad8,
-    NumPad9 = vkNumpad9,
+      NumPad0 = vkNumpad0,      NumPad1 = vkNumpad1,      NumPad2 = vkNumpad2,      NumPad3 = vkNumpad3,      NumPad4 = vkNumpad4,
+      NumPad5 = vkNumpad5,      NumPad6 = vkNumpad6,      NumPad7 = vkNumpad7,      NumPad8 = vkNumpad8,      NumPad9 = vkNumpad9,
 
-    Multiply = vkMultiply, Add = vkAdd, Separator = vkSeparator, Subtract = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
+      Multiply = vkMultiply, Add = vkAdd, Separator = vkSeparator, Subtract = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
 
-    F1 = vkF1, F2 = vkF2, F3 = vkF3, F4 = vkF4, F5 = vkF5, F6 = vkF6, F7 = vkF7, F8 = vkF8, F9 = vkF9, F10 = vkF10, F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16,
-    F17 = vkF17, F18 = vkF18, F19 = vkF19, F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
+      F1 = vkF1, F2 = vkF2, F3 = vkF3, F4 = vkF4, F5 = vkF5, F6 = vkF6, F7 = vkF7, F8 = vkF8, F9 = vkF9,
+      F10 = vkF10, F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16,
+      F17 = vkF17, F18 = vkF18, F19 = vkF19, F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
 
-    BrowserBack = vkBrowserBack, BrowserForward = vkBrowserForward, BrowserRefresh = vkBrowserRefresh, BrowserStop = vkBrowserStop, BrowserSearch = vkBrowserSearch,
-    BrowserFavorites = vkBrowserFavorites, BrowserHome = vkBrowserHome, VolumeMute = vkVolumeMute, VolumeDown = vkVolumeDown, VolumeUp = vkVolumeUp, MediaNext = vkMediaNextTrack,
-    MediaPrevious = vkMediaPrevTrack, MediaStop = vkMediaStop, MediaPlay = vkMediaPlayPause, LaunchMail = vkLaunchMail, LaunchMediaSelect = vkLaunchMediaSelect, LaunchApp1 = vkLaunchApp1,
-    LaunchApp2 = vkLaunchApp2, Oem1 = vkSemicolon,
+      BrowserBack = vkBrowserBack, BrowserForward = vkBrowserForward, BrowserRefresh = vkBrowserRefresh, BrowserStop = vkBrowserStop, BrowserSearch = vkBrowserSearch,
+      BrowserFavorites = vkBrowserFavorites, BrowserHome = vkBrowserHome, VolumeMute = vkVolumeMute, VolumeDown = vkVolumeDown, VolumeUp = vkVolumeUp, MediaNext = vkMediaNextTrack,
+      MediaPrevious = vkMediaPrevTrack, MediaStop = vkMediaStop, MediaPlay = vkMediaPlayPause, LaunchMail = vkLaunchMail, LaunchMediaSelect = vkLaunchMediaSelect, LaunchApp1 = vkLaunchApp1,
+      LaunchApp2 = vkLaunchApp2, Oem1 = vkSemicolon,
 
-    OemPlus = vkEqual, OemComma = vkComma, OemMinus = vkMinus, OemPeriod = vkPeriod, Oem2 = vkSlash, Oem3 = vkTilde, Oem4 = vkLeftBracket, Oem5 = vkBackslash, Oem6 = vkRightBracket, Oem7 = vkQuote,
-    Oem8 = vkPara, Oem102 = vkOem102,
+      OemPlus = vkEqual, OemComma = vkComma, OemMinus = vkMinus, OemPeriod = vkPeriod,
+      Oem2 = vkSlash, Oem3 = vkTilde, Oem4 = vkLeftBracket, Oem5 = vkBackslash, Oem6 = vkRightBracket, Oem7 = vkQuote, Oem8 = vkPara, Oem102 = vkOem102,
 
-    Process = vkProcessKey, Packet = vkPacket, Attention = vkAttn, CrSel = vkCrsel, ExSel = vkExsel, EraseEndOfFile = vkErEof, Play = vkPlay, Zoom = vkZoom, NoName = vkNoname, Pa1 = vkPA1,
-    OemClear = vkOemClear);
+      Process = vkProcessKey, Packet = vkPacket, Attention = vkAttn, CrSel = vkCrsel, ExSel = vkExsel, EraseEndOfFile = vkErEof, Play = vkPlay, Zoom = vkZoom,
+      NoName = vkNoname, Pa1 = vkPA1, OemClear = vkOemClear
+  );
 
   TConsoleModifiers = (Alt, Shift, Control);
 
@@ -111,22 +153,20 @@ type
     class var StdIn: THandle;
     class var StdOut: THandle;
     class var TextAttr: Word;
+    class var FAutoAllocateConsole : Boolean;
 
+    class procedure RaiseConsoleError(aCaller : String);
     class function ConsoleColorToColorAttribute(ConsoleColor: TConsoleColor; IsBackground: Boolean): TWinColor; static;
     class function ConsoleCursorInfo: TConsoleCursorInfo;
     class function ConsoleRect: TRect;
     class function GetBufferInfo: TConsoleScreenBufferInfo; static;
     class function CanGetBufferInfo: Boolean; static;
     class function GetConsoleOutputHandle: THandle; static;
-    class function ScreenHeight: SmallInt;
-    class function ScreenWidth: SmallInt;
-    class procedure GetScreenSizes(var Width, Height: SmallInt);
     class procedure GotoXY(X, Y: SmallInt);
     class procedure ScrollScreenBuffer(Left, Top, Right, Bottom: Integer; Distance: Integer = 0);
     class procedure SetConsoleOutputHandle(const Value: THandle); static;
     class procedure SetConsoleRect(Rect: TRect);
     class function WriteString(aValue: string): Cardinal; inline;
-  strict private
     class function GenericToString<T>(aValue: T): string;
     class function GetConsoleRedirected(const Index: Integer): Boolean; static;
     class function GetBackgroundColor: TConsoleColor; static;
@@ -183,7 +223,10 @@ type
 
     // Initialize
     class constructor Create;
-    class procedure AttachConsole;
+    class destructor Destroy;
+    class function AttatchConsole : Boolean;
+    class procedure AllocateConsole;
+    class procedure FreeConsole;
     // Methods
     class procedure Beep(Frequency, Duration: Cardinal); overload; static;
     class procedure Beep; overload; static;
@@ -210,6 +253,7 @@ type
     class procedure WriteLine; overload; static;
 
     // properties
+    class property AutoAllocateConsole : Boolean read FAutoAllocateConsole write FAutoAllocateConsole;
     class property BackgroundColor: TConsoleColor read GetBackgroundColor write SetBackgroundColor;
     class property BufferHeight: Integer read GetBufferHeight write SetBufferHeight;
     class property BufferSize: TCoord read GetBufferSize write SetBufferSize;
@@ -240,9 +284,10 @@ type
     class property WindowTop: Integer read GetWindowTop write SetWindowTop;
   end;
 
+function AttachConsole(dwProcessId: DWORD): Bool; stdcall; external KERNEL32 name 'AttachConsole';
 function GetConsoleWindow: HWND; stdcall; external kernel32 name 'GetConsoleWindow';
-function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; ConsoleInfo: pCONSOLE_FONT_INFOEX): BOOL; stdcall; external kernel32 name 'SetCurrentConsoleFontEx';
 function GetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; ConsoleInfo: pCONSOLE_FONT_INFOEX): BOOL; stdcall; external kernel32 name 'GetCurrentConsoleFontEx';
+function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; ConsoleInfo: pCONSOLE_FONT_INFOEX): BOOL; stdcall; external kernel32 name 'SetCurrentConsoleFontEx';
 
 implementation
 
@@ -263,6 +308,26 @@ begin
 end;
 { Console }
 
+class function Console.AttatchConsole: Boolean;
+const
+  ATTACH_PARENT_PROCESS : UINT = $0ffffffff;
+begin
+  {$IFNDEF Win32}
+    if IsDebuggerPresent then
+      Exit(false);
+  (*
+    In the case of a 64-bit debug, it appears that the IDE is creating a console for the debugger,
+    which hosts the debugged application as a child, and so electing to attach to the parent console succeeds.
+
+    This console is not created for a 32-bit debug session.
+  *)
+  {$ENDIF}
+
+    Result := AttachConsole(ATTACH_PARENT_PROCESS);
+  if Result then
+    AllocateConsole;
+end;
+
 class procedure Console.Beep;
 begin
   Beep;
@@ -276,33 +341,26 @@ end;
 class procedure Console.Clear;
 var
   StartPos: TCoord;
-  Len, NumWritten: DWORD;
-  I: Integer;
+  Buffer : TConsoleScreenBufferInfo;
+  ConSize : Integer;
+  NumWritten: DWORD;
 begin
-  if (FTextWindow.Left = 0) and (FTextWindow.Top = 0) and (FTextWindow.Right = BufferSize.X - 1) and (FTextWindow.Bottom = BufferSize.Y - 1) then
-  begin
-    StartPos.X := 0;
-    StartPos.Y := 0;
-    Len := BufferSize.X * BufferSize.Y;
-    FillConsoleOutputCharacter(StdOut, ' ', Len, StartPos, NumWritten);
-    FillConsoleOutputAttribute(StdOut, TextAttr, Len, StartPos, NumWritten);
-    if NumWritten < Len then
-    begin
-      FScreenSize.X := ScreenWidth;
-      FScreenSize.Y := ScreenHeight;
-    end;
-  end
-  else
-  begin
-    Len := FTextWindow.Right - FTextWindow.Left + 1;
-    StartPos.X := FTextWindow.Left;
-    for I := FTextWindow.Top to FTextWindow.Bottom do
-    begin
-      StartPos.Y := I;
-      FillConsoleOutputCharacter(StdOut, ' ', Len, StartPos, NumWritten);
-      FillConsoleOutputAttribute(StdOut, TextAttr, Len, StartPos, NumWritten);
-    end;
-  end;
+  if StdOut = INVALID_HANDLE_VALUE then
+    exit;
+
+  Buffer := GetBufferInfo;
+  ConSize := Buffer.dwSize.X * Buffer.dwSize.Y;
+  StartPos.X := 0;
+  StartPos.y := 0;
+
+  if not FillConsoleOutputCharacter(StdOut, ' ', ConSize, StartPos, NumWritten) then
+     RaiseConsoleError('FillConsoleOutputCharacter in Console.Clear');
+
+  NumWritten := 0;
+
+  if not FillConsoleOutputAttribute(StdOut, Buffer.wAttributes, ConSize, StartPos, NumWritten) then
+     RaiseConsoleError('FillConsoleOutputAttribute in Console.Clear');
+
   GotoXY(1, 1);
 end;
 
@@ -312,6 +370,9 @@ var
   Pos: TCoord;
   NumWritten: DWORD;
 begin
+  if StdOut = INVALID_HANDLE_VALUE then
+    exit;
+
   Pos := GetBufferInfo.dwCursorPosition;
   if Pos.X > FTextWindow.Right then
     Exit;
@@ -338,13 +399,9 @@ begin
 end;
 
 class function Console.ConsoleRect: TRect;
-var
-  ConsoleHandle: THandle;
 begin
   ZeroMemory(@Result, SizeOf(TRect));
-  ConsoleHandle := GetConsoleWindow;
-  if ConsoleHandle <> 0 then
-    GetWindowRect(ConsoleHandle, Result);
+  GetWindowRect(GetConsoleWindow, Result);
 end;
 
 class function Console.GetConsoleRedirected(const Index: Integer): Boolean;
@@ -355,23 +412,29 @@ begin
   Result := (FileType = FILE_TYPE_PIPE) or (FileType = FILE_TYPE_DISK);
 end;
 
-class procedure Console.AttachConsole;
+class procedure Console.AllocateConsole;
 var
   BufferInfo: TConsoleScreenBufferInfo;
 begin
-  Console.ConsoleOutputHandle := GetStdHandle(STD_OUTPUT_HANDLE);
-  TextAttr := GetBufferInfo.wAttributes and $FF;
-  DefaultTextAttributes := TextAttr;
+  if not System.Console.AttachConsole(DWORD(-1)) then
+  begin
+     if FAutoAllocateConsole then
+       AllocConsole
+     else
+       Exit;
+  end;
+
+  StdIn := GetStdHandle(STD_INPUT_HANDLE);
+  StdOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  StdErr := GetStdHandle(STD_ERROR_HANDLE);
+
   Reset(Input);
   Rewrite(Output);
-  StdIn := TTextRec(Input).Handle;
-  StdOut := TTextRec(Output).Handle;
-{$IFDEF HASERROUTPUT}
   Rewrite(ErrOutput);
-  StdErr := TTextRec(ErrOutput).Handle;
-{$ELSE}
-  StdErr := GetStdHandle(STD_ERROR_HANDLE);
-{$ENDIF}
+
+  TextAttr := GetBufferInfo.wAttributes and $FF;
+  DefaultTextAttributes := TextAttr;
+
   if not GetConsoleScreenBufferInfo(StdOut, BufferInfo) then
   begin
     SetInOutRes(GetLastError);
@@ -386,41 +449,30 @@ begin
   FScreenSize.Y := BufferInfo.srWindow.Bottom - BufferInfo.srWindow.Top + 1;
 end;
 
-procedure SetConsoleFontSize(const aFontSize: Word); overload;
-var
-  ci: TCONSOLE_FONT_INFOEX;
-  ch: THandle;
-  Destination: PChar;
-const
-  FaceName = 'Consolas';
-begin
-  if NOT CheckWin32Version(6, 0) then
-    Exit;
-
-  FillChar(ci, SizeOf(TCONSOLE_FONT_INFOEX), 0);
-  ci.cbSize := SizeOf(TCONSOLE_FONT_INFOEX);
-
-  ch := GetStdHandle(STD_OUTPUT_HANDLE);
-  ci := Console.ConsoleFont;
-
-  ci.FontFamily := Cardinal(TFontFamily.ffDontCare);
-  Destination := @ci.FaceName[0];
-  StrLCopy(Destination, PChar(FaceName), LF_FACESIZE - 1);
-  ci.dwFontSize.X := 0;
-  ci.dwFontSize.Y := aFontSize;
-  ci.FontWeight := Cardinal(TFontWeight.fwDontCare);
-  SetCurrentConsoleFontEx(ch, FALSE, @ci);
-end;
-
 class constructor Console.Create;
 begin
+  StdIn := GetStdHandle(STD_INPUT_HANDLE);
+  StdOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  StdErr := GetStdHandle(STD_ERROR_HANDLE);
+  FAutoAllocateConsole := True;
+
   if Console.CanGetBufferInfo then
-    Console.AttachConsole;
+    Console.AllocateConsole;
 end;
 
 class procedure Console.DeleteLine;
 begin
   ScrollScreenBuffer(FTextWindow.Left, GetBufferInfo.dwCursorPosition.Y, FTextWindow.Right, FTextWindow.Bottom, -1);
+end;
+
+class destructor Console.Destroy;
+begin
+  FreeConsole;
+end;
+
+class procedure Console.FreeConsole;
+begin
+  Winapi.Windows.FreeConsole;
 end;
 
 class function Console.GenericToString<T>(aValue: T): string;
@@ -477,15 +529,18 @@ end;
 
 class function Console.CanGetBufferInfo: Boolean;
 var
-  dummy: TConsoleScreenBufferInfo;
+  Dummy: TConsoleScreenBufferInfo;
 begin
-  Result := GetConsoleScreenBufferInfo(ConsoleOutputHandle, dummy);
+  Result := GetConsoleScreenBufferInfo(ConsoleOutputHandle, Dummy);
 end;
 
 class function Console.GetBufferInfo: TConsoleScreenBufferInfo;
 begin
+  if StdOut = INVALID_HANDLE_VALUE then
+    exit;
+
   if not GetConsoleScreenBufferInfo(ConsoleOutputHandle, Result) then
-    raise Exception.Create('Error while getting screenbuffer info');
+    RaiseConsoleError('GetBufferInfo');
 end;
 
 class function Console.GetBufferSize: TCoord;
@@ -507,12 +562,12 @@ end;
 
 class function Console.GetConsoleInputHandle: Integer;
 begin
-  Result := GetStdHandle(STD_INPUT_HANDLE)
+  Result := StdIn;
 end;
 
 class function Console.GetConsoleOutputHandle: THandle;
 begin
-  Result := GetStdHandle(STD_OUTPUT_HANDLE);
+  Result := StdOut;
 end;
 
 class function Console.GetCursorLeft: Integer;
@@ -552,6 +607,10 @@ var
   NumberOfEventsRead: DWORD;
 begin
   Result := FALSE;
+
+  if StdIn = INVALID_HANDLE_VALUE then
+    exit;
+
   NumberOfEvents := 0;
   GetNumberOfConsoleInputEvents(StdIn, NumberOfEvents);
 
@@ -588,24 +647,16 @@ begin
   Result := TEncoding.GetEncoding(GetConsoleOutputCP);
 end;
 
-class procedure Console.GetScreenSizes(var Width, Height: SmallInt);
-var
-  BufferInfo: TConsoleScreenBufferInfo;
-begin
-  GetConsoleScreenBufferInfo(StdOut, BufferInfo);
-  Width := BufferInfo.srWindow.Right - BufferInfo.srWindow.Left + 1;
-  Height := BufferInfo.srWindow.Bottom - BufferInfo.srWindow.Top + 1;
-end;
-
 class function Console.GetTitle: string;
 var
   TitleLength: Integer;
-  Handle: THandle;
 begin
-  Handle := GetConsoleWindow;
-  TitleLength := GetWindowTextLength(Handle);
+  if GetConsoleWindow = 0 then
+    exit(string.Empty);
+
+  TitleLength := GetWindowTextLength(GetConsoleWindow);
   SetLength(Result, TitleLength);
-  GetWindowText(Handle, PChar(Result), TitleLength + 1);
+  GetWindowText(GetConsoleWindow, PChar(Result), TitleLength + 1);
 end;
 
 class function Console.GetTreatControlCAsInput: Boolean;
@@ -673,8 +724,10 @@ var
   ReadRegion, WriteRegion: SMALL_RECT;
   dwWriteCoord, bufferCoord: TCoord;
   wColorAttribute, color: TWinColor;
-
 begin
+  if StdOut = INVALID_HANDLE_VALUE then
+    exit;
+
   if ((SourceForeColor < TConsoleColor.Black) or (SourceForeColor > TConsoleColor.White)) then
     raise EArgumentException.Create('ParamName: SourceForeColor');
   if ((SourceBackColor < TConsoleColor.Black) or (SourceBackColor > TConsoleColor.White)) then
@@ -695,7 +748,6 @@ begin
     raise EArgumentOutOfRangeException.Create('TargetTop' + IntToStr(TargetTop) + 'ArgumentOutOfRange: ConsoleBufferBoundaries');
   if ((SourceWidth <> 0) and (SourceHeight <> 0)) then
   begin
-    // UIPermission.Create(UIPermissionWindow.SafeTopLevelWindows).Demand;
     SetLength(CharInfoArray, (SourceWidth * SourceHeight));
     dwSize.X := SourceWidth;
     dwSize.Y := SourceHeight;
@@ -761,6 +813,11 @@ begin
   SetConsoleMode(StdIn, KeyMode);
 end;
 
+class procedure Console.RaiseConsoleError(aCaller: String);
+begin
+  raise ECOnsoleError.Create('Error calling ' + aCaller +':' + sLineBreak + SysErrorMessage(GetLastError));
+end;
+
 class function Console.Read: Integer;
 begin
   System.Read(Result);
@@ -784,11 +841,13 @@ var
   InputRec: TInputRecord;
   NumRead: Cardinal;
   OldKeyMode: DWORD;
-  StdIn: THandle;
 begin
-  StdIn := GetStdHandle(STD_INPUT_HANDLE);
+  if StdIn = INVALID_HANDLE_VALUE then
+    exit;
+
   GetConsoleMode(StdIn, OldKeyMode);
   SetConsoleMode(StdIn, 0);
+
   repeat
     ReadConsoleInput(StdIn, InputRec, 1, NumRead);
   until (InputRec.EventType and KEY_EVENT <> 0) and InputRec.Event.KeyEvent.bKeyDown;
@@ -799,39 +858,21 @@ begin
   SetConsoleMode(StdIn, OldKeyMode);
 end;
 
-// if (InputRec.EventType and KEY_EVENT <> 0) and InputRec.Event.KeyEvent.bKeyDown then
-// if InputRec.Event.KeyEvent.AsciiChar <> #0 then
-// begin
-// Result.Key := TConsoleKey(InputRec.Event.KeyEvent.wVirtualKeyCode);
-// Result.KeyChar := InputRec.Event.KeyEvent.UnicodeChar;
-// Break;
-// end;
-// until false;
-// SetConsoleMode(StdIn, KeyMode);
-// end;
-
 class function Console.ReadLine: string;
+var
+  Buffer : Array[0..1024] of char;
+  NumberOfCharsRead : DWORD;
 begin
-  ReadLn(Result);
+  if StdIn = INVALID_HANDLE_VALUE then
+    exit('');
+  ZeroMemory(@Buffer, Length(Buffer));
+  ReadConsole(StdIn, @Buffer, Length(Buffer),  NumberOfCharsRead , nil);
+  Result := Pchar(@Buffer);
 end;
 
 class procedure Console.ResetColor;
 begin
   SetConsoleTextAttribute(StdOut, DefaultTextAttributes);
-end;
-
-class function Console.ScreenHeight: SmallInt;
-var
-  Width: SmallInt;
-begin
-  GetScreenSizes(Width, Result);
-end;
-
-class function Console.ScreenWidth: SmallInt;
-var
-  Height: SmallInt;
-begin
-  GetScreenSizes(Result, Height);
 end;
 
 class procedure Console.ScrollScreenBuffer(Left, Top, Right, Bottom, Distance: Integer);
@@ -872,8 +913,8 @@ class procedure Console.SetBufferSize(Width, Height: Integer);
 var
   Size: TCoord;
 begin
-  if not IsConsole then
-    Exit;
+  if StdOut = INVALID_HANDLE_VALUE then
+    exit;
 
   Size.X := Width;
   Size.Y := Height;
@@ -950,7 +991,7 @@ end;
 
 class procedure Console.SetConsoleFont(const Value: TCONSOLE_FONT_INFOEX);
 begin
-
+  SetCurrentConsoleFontEx(StdOut, FALSE, @Value);
 end;
 
 class procedure Console.SetConsoleInputHandle(const Value: Integer);
@@ -976,12 +1017,12 @@ end;
 
 class procedure Console.SetTitle(const Value: string);
 begin
-  SetWindowText(GetConsoleWindow, PChar(Value));
+  SetConsoleTitle(Pchar(Value));
 end;
 
 class procedure Console.SetTreatControlCAsInput(const Value: Boolean);
 begin
-  if not SetConsoleMode(ConsoleInputHandle, Cardinal(Value)) then
+  if not SetConsoleMode(StdOut, Cardinal(Value)) then
     RaiseLastOSError;
 end;
 
@@ -1076,7 +1117,6 @@ class procedure Console.UpdateConsoleFont(aFontName: string; aFontSize: Cardinal
 var
   CONSOLE_FONT_INFOEX: TCONSOLE_FONT_INFOEX;
   Destination: PChar;
-  S: string;
 begin
   CONSOLE_FONT_INFOEX := ConsoleFont;
   CONSOLE_FONT_INFOEX.FontFamily := Cardinal(aFontFamily);
@@ -1091,8 +1131,8 @@ begin
     CONSOLE_FONT_INFOEX.dwFontSize.Y := aFontSize;
 
   CONSOLE_FONT_INFOEX.FontWeight := Cardinal(aFontWeight);
-  if not SetCurrentConsoleFontEx(GetConsoleWindow, FALSE, @CONSOLE_FONT_INFOEX) then
-    S := SysErrorMessage(GetLastError);
+  if not SetCurrentConsoleFontEx(StdOut, FALSE, @CONSOLE_FONT_INFOEX) then
+    RaiseLastOSError;
 end;
 
 class procedure Console.WriteLine<T>(aValue: T);
@@ -1102,7 +1142,11 @@ end;
 
 class function Console.WriteString(aValue: string): Cardinal;
 begin
-  WriteConsole(StdOut, PWideChar(aValue), Length(aValue), Result, nil);
+  if StdOut = INVALID_HANDLE_VALUE then
+    AllocateConsole;
+
+  if StdOut <> INVALID_HANDLE_VALUE then
+    WriteConsole(StdOut, PWideChar(aValue), Length(aValue), Result, nil);
 end;
 
 class procedure Console.Write<T>(aValue: T);
@@ -1134,7 +1178,6 @@ begin
 
   for I := 0 to high(Args) do
   begin
-
     VarRecArray[I].VType := vtUnicodeString;
     // nil out first, so no attempt to decrement reference count.
     VarRecArray[I].VUnicodeString := nil;

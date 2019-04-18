@@ -1,0 +1,84 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F91A128A-D6A0-41CE-B3A5-CBD485520DBA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Console From GUI\ConsoleFromGUI.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Snake\Snake.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GUI AND Console APP\GUIAndConsoleApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Test Console App\TestConsoleApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="WriteLine Test\WriteLineTest.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ConsoleFromGUI">
+        <MSBuild Projects="Console From GUI\ConsoleFromGUI.dproj"/>
+    </Target>
+    <Target Name="ConsoleFromGUI:Clean">
+        <MSBuild Projects="Console From GUI\ConsoleFromGUI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ConsoleFromGUI:Make">
+        <MSBuild Projects="Console From GUI\ConsoleFromGUI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Snake">
+        <MSBuild Projects="Snake\Snake.dproj"/>
+    </Target>
+    <Target Name="Snake:Clean">
+        <MSBuild Projects="Snake\Snake.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Snake:Make">
+        <MSBuild Projects="Snake\Snake.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GUIAndConsoleApp">
+        <MSBuild Projects="GUI AND Console APP\GUIAndConsoleApp.dproj"/>
+    </Target>
+    <Target Name="GUIAndConsoleApp:Clean">
+        <MSBuild Projects="GUI AND Console APP\GUIAndConsoleApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GUIAndConsoleApp:Make">
+        <MSBuild Projects="GUI AND Console APP\GUIAndConsoleApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestConsoleApp">
+        <MSBuild Projects="Test Console App\TestConsoleApp.dproj"/>
+    </Target>
+    <Target Name="TestConsoleApp:Clean">
+        <MSBuild Projects="Test Console App\TestConsoleApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestConsoleApp:Make">
+        <MSBuild Projects="Test Console App\TestConsoleApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WriteLineTest">
+        <MSBuild Projects="WriteLine Test\WriteLineTest.dproj"/>
+    </Target>
+    <Target Name="WriteLineTest:Clean">
+        <MSBuild Projects="WriteLine Test\WriteLineTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WriteLineTest:Make">
+        <MSBuild Projects="WriteLine Test\WriteLineTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ConsoleFromGUI;Snake;GUIAndConsoleApp;TestConsoleApp;WriteLineTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ConsoleFromGUI:Clean;Snake:Clean;GUIAndConsoleApp:Clean;TestConsoleApp:Clean;WriteLineTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ConsoleFromGUI:Make;Snake:Make;GUIAndConsoleApp:Make;TestConsoleApp:Make;WriteLineTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
