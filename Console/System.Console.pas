@@ -14,6 +14,15 @@ uses
 {$WARN SYMBOL_PLATFORM OFF}
 {$SCOPEDENUMS ON}
 
+// XE4's CompilerVersion is 25
+{$IF CompilerVersion <= 25}
+const
+  vkPeriod  : Integer = $BE;
+  vkPara    : Integer = $DF;
+  vkOem102  : Integer = $E2;
+{$IFEND}
+
+
 type
   ECOnsoleError = class(Exception);
   TConsoleColor = (
@@ -60,9 +69,9 @@ type
       Help = vkHelp,
 
       D0 = vk0,     D1 = vk1,     D2 = vk2,     D3 = vk3,     D4 = vk4,     D5 = vk5,     D6 = vk6,     D7 = vk7,      D8 = vk8,     D9 = vk9,
-      A = vkA,      B = vkB,      C = vkC,      D = vkD,      E = vkE,      F = vkF,      G = vkG,      H = vkH,       I = vkI,      J = vkJ,
-      K = vkK,      L = vkL,      M = vkM,      N = vkN,      O = vkO,      P = vkP,      Q = vkQ,      R = vkR,       S = vkS,      T = vkT,
-      U = vkU,      V = vkV,      W = vkW,      X = vkX,      Y = vkY,      Z = vkZ,
+      A  = vkA,      B = vkB,      C = vkC,      D = vkD,      E = vkE,      F = vkF,      G = vkG,      H = vkH,       I = vkI,      J = vkJ,
+      K  = vkK,      L = vkL,      M = vkM,      N = vkN,      O = vkO,      P = vkP,      Q = vkQ,      R = vkR,       S = vkS,      T = vkT,
+      U  = vkU,      V = vkV,      W = vkW,      X = vkX,      Y = vkY,      Z = vkZ,
 
       LeftWindows = vkLWin,  RightWindows = vkRWin,   Applications = vkApps,   Sleep = vkSleep,
 
@@ -71,17 +80,18 @@ type
 
       Multiply = vkMultiply, Add = vkAdd, Separator = vkSeparator, Subtract = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
 
-      F1 = vkF1, F2 = vkF2, F3 = vkF3, F4 = vkF4, F5 = vkF5, F6 = vkF6, F7 = vkF7, F8 = vkF8, F9 = vkF9,
-      F10 = vkF10, F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16,
-      F17 = vkF17, F18 = vkF18, F19 = vkF19, F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
+      F1  = vkF1,    F2 =  vkF2,  F3 = vkF3,   F4 = vkF4,   F5 = vkF5,   F6 = vkF6,   F7 = vkF7,  F8  = vkF8,   F9 = vkF9,
+      F10 = vkF10,  F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16, F17 = vkF17,  F18 = vkF18,
+      F19 = vkF19,  F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
 
-      BrowserBack = vkBrowserBack, BrowserForward = vkBrowserForward, BrowserRefresh = vkBrowserRefresh, BrowserStop = vkBrowserStop, BrowserSearch = vkBrowserSearch,
-      BrowserFavorites = vkBrowserFavorites, BrowserHome = vkBrowserHome, VolumeMute = vkVolumeMute, VolumeDown = vkVolumeDown, VolumeUp = vkVolumeUp, MediaNext = vkMediaNextTrack,
-      MediaPrevious = vkMediaPrevTrack, MediaStop = vkMediaStop, MediaPlay = vkMediaPlayPause, LaunchMail = vkLaunchMail, LaunchMediaSelect = vkLaunchMediaSelect, LaunchApp1 = vkLaunchApp1,
-      LaunchApp2 = vkLaunchApp2, Oem1 = vkSemicolon,
-
-      OemPlus = vkEqual, OemComma = vkComma, OemMinus = vkMinus, OemPeriod = vkPeriod,
-      Oem2 = vkSlash, Oem3 = vkTilde, Oem4 = vkLeftBracket, Oem5 = vkBackslash, Oem6 = vkRightBracket, Oem7 = vkQuote, Oem8 = vkPara, Oem102 = vkOem102,
+      BrowserBack   = vkBrowserBack,    BrowserForward    = vkBrowserForward,   BrowserRefresh = vkBrowserRefresh,  BrowserStop       = vkBrowserStop,
+      BrowserSearch = vkBrowserSearch,  BrowserFavorites  = vkBrowserFavorites, BrowserHome    = vkBrowserHome,     VolumeMute        = vkVolumeMute,
+      VolumeDown    = vkVolumeDown,     VolumeUp          = vkVolumeUp,         MediaNext      = vkMediaNextTrack,  MediaPrevious     = vkMediaPrevTrack,
+      MediaStop     = vkMediaStop,      MediaPlay         = vkMediaPlayPause,   LaunchMail     = vkLaunchMail,      LaunchMediaSelect = vkLaunchMediaSelect,
+      LaunchApp1    = vkLaunchApp1,     LaunchApp2        = vkLaunchApp2,       Oem1           = vkSemicolon,       OemPlus           = vkEqual,
+      OemComma      = vkComma,          OemMinus          = vkMinus,            OemPeriod      = vkPeriod,          Oem2              = vkSlash,
+      Oem3          = vkTilde,          Oem4              = vkLeftBracket,      Oem5           = vkBackslash,       Oem6              = vkRightBracket,
+      Oem7          = vkQuote,          Oem8              = vkPara,             Oem102         = vkOem102,
 
       Process = vkProcessKey, Packet = vkPacket, Attention = vkAttn, CrSel = vkCrsel, ExSel = vkExsel, EraseEndOfFile = vkErEof, Play = vkPlay, Zoom = vkZoom,
       NoName = vkNoname, Pa1 = vkPA1, OemClear = vkOemClear

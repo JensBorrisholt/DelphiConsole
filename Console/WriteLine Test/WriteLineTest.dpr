@@ -28,7 +28,6 @@ procedure WriteHeader(aValue: string);
 var
   s, t: string;
   i: Integer;
-  p: PChar;
 begin
   if aValue = '' then
     exit;
@@ -81,6 +80,7 @@ begin
     Console.WriteLine(Console);
 
     WriteHeader('Object (nil)');
+    aConsole := nil;
     Console.WriteLine(aConsole);
 
     WriteHeader('Set');
