@@ -17,10 +17,10 @@ uses
 // XE4's CompilerVersion is 25
 {$IF CompilerVersion <= 25}
 const
-  vkPeriod  : Integer = $BE;
-  vkPara    : Integer = $DF;
-  vkOem102  : Integer = $E2;
-{$IFEND}
+  vkPeriod   = $BE;
+  vkPara     = $DF;
+  vkOem102   = $E2;
+{$ENDIF}
 
 
 type
@@ -45,42 +45,24 @@ type
     );
 
   TConsoleKey = (
-      Backspace = vkBack,
-      Tab = vkTab,
-      Clear = vkClear,
-      Enter = vkReturn,
-      Pause = vkPause,
-      Escape = vkEscape,
-      Spacebar = vkSpace,
-      PageUp = vkPrior,
-      PageDown = vkNext,
-      &End = vkEnd,
-      Home = vkHome,
-      LeftArrow = vkLeft,
-      UpArrow = vkUp,
-      RightArrow = vkRight,
-      DownArrow = vkDown,
-      Select = vkSelect,
-      Print = vkPrint,
-      Execute = vkExecute,
-      PrintScreen = vkSnapshot,
-      Insert = vkInsert,
-      Delete = vkDelete,
-      Help = vkHelp,
+      Backspace = vkBack,  Tab       = vkTab,    Clear = vkClear,  Enter   = vkReturn,  Pause       = vkPause,    Escape  = vkEscape,  Spacebar   = vkSpace,
+      PageUp    = vkPrior, PageDown  = vkNext,   &End  = vkEnd,    Home    = vkHome,    LeftArrow   = vkLeft,     UpArrow = vkUp,      RightArrow = vkRight,
+      DownArrow = vkDown,  Select    = vkSelect, Print = vkPrint,  Execute = vkExecute, PrintScreen = vkSnapshot, Insert  = vkInsert,  Delete     = vkDelete,
+      Help      = vkHelp,
 
       D0 = vk0,     D1 = vk1,     D2 = vk2,     D3 = vk3,     D4 = vk4,     D5 = vk5,     D6 = vk6,     D7 = vk7,      D8 = vk8,     D9 = vk9,
       A  = vkA,      B = vkB,      C = vkC,      D = vkD,      E = vkE,      F = vkF,      G = vkG,      H = vkH,       I = vkI,      J = vkJ,
       K  = vkK,      L = vkL,      M = vkM,      N = vkN,      O = vkO,      P = vkP,      Q = vkQ,      R = vkR,       S = vkS,      T = vkT,
       U  = vkU,      V = vkV,      W = vkW,      X = vkX,      Y = vkY,      Z = vkZ,
 
-      LeftWindows = vkLWin,  RightWindows = vkRWin,   Applications = vkApps,   Sleep = vkSleep,
+      LeftWindows = vkLWin,     RightWindows = vkRWin,  Applications = vkApps,      Sleep     = vkSleep,
+      Multiply    = vkMultiply, Add          = vkAdd,   Separator    = vkSeparator, Subtract  = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
 
       NumPad0 = vkNumpad0,      NumPad1 = vkNumpad1,      NumPad2 = vkNumpad2,      NumPad3 = vkNumpad3,      NumPad4 = vkNumpad4,
       NumPad5 = vkNumpad5,      NumPad6 = vkNumpad6,      NumPad7 = vkNumpad7,      NumPad8 = vkNumpad8,      NumPad9 = vkNumpad9,
 
-      Multiply = vkMultiply, Add = vkAdd, Separator = vkSeparator, Subtract = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
 
-      F1  = vkF1,    F2 =  vkF2,  F3 = vkF3,   F4 = vkF4,   F5 = vkF5,   F6 = vkF6,   F7 = vkF7,  F8  = vkF8,   F9 = vkF9,
+      F1  =  vkF1,   F2 =  vkF2,  F3 =  vkF3,  F4 =  vkF4,  F5 =  vkF5,  F6 =  vkF6,  F7 =  vkF7,  F8  = vkF8,   F9 =  vkF9,
       F10 = vkF10,  F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16, F17 = vkF17,  F18 = vkF18,
       F19 = vkF19,  F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
 
@@ -93,8 +75,9 @@ type
       Oem3          = vkTilde,          Oem4              = vkLeftBracket,      Oem5           = vkBackslash,       Oem6              = vkRightBracket,
       Oem7          = vkQuote,          Oem8              = vkPara,             Oem102         = vkOem102,
 
-      Process = vkProcessKey, Packet = vkPacket, Attention = vkAttn, CrSel = vkCrsel, ExSel = vkExsel, EraseEndOfFile = vkErEof, Play = vkPlay, Zoom = vkZoom,
-      NoName = vkNoname, Pa1 = vkPA1, OemClear = vkOemClear
+      Process       = vkProcessKey,     Packet            = vkPacket,           Attention      = vkAttn,            CrSel             = vkCrsel,
+      ExSel         = vkExsel,          EraseEndOfFile    = vkErEof,            Play           = vkPlay,            Zoom              = vkZoom,
+      NoName        = vkNoname,         Pa1               = vkPA1,              OemClear       = vkOemClear
   );
 
   TConsoleModifiers = (Alt, Shift, Control);
@@ -125,37 +108,54 @@ type
 
   TFontFamily =
   (
-    ffDontCare = FF_DONTCARE,
-    Roman = FF_ROMAN,
-    Swiss = FF_SWISS,
-    Modern = FF_MODERN,
-    Script = FF_SCRIPT,
-    Decorative = FF_DECORATIVE
+    ffDontCare  = FF_DONTCARE,
+    Roman       = FF_ROMAN,
+    Swiss       = FF_SWISS,
+    Modern      = FF_MODERN,
+    Script      = FF_SCRIPT,
+    Decorative  = FF_DECORATIVE
   );
 
   TFontWeight =
   (
-    fwDontCare = FW_DONTCARE,
-    Thin = FW_THIN,
-    ExtraLight = FW_EXTRALIGHT,
-    Normal = FW_NORMAL,
-    Medium = FW_MEDIUM,
-    SemiBold = FW_SEMIBOLD,
-    Bold = FW_BOLD,
-    ExtraBold = FW_EXTRABOLD,
-    Heavy = FW_HEAVY,
-    UltraLight = FW_ULTRALIGHT,
-    Regular = FW_NORMAL,
-    DemiBold = FW_SEMIBOLD,
-    UltraBold = FW_EXTRABOLD,
-    Black = FW_HEAVY
+    fwDontCare  = FW_DONTCARE,
+    Thin        = FW_THIN,
+    ExtraLight  = FW_EXTRALIGHT,
+    Normal      = FW_NORMAL,
+    Medium      = FW_MEDIUM,
+    SemiBold    = FW_SEMIBOLD,
+    Bold        = FW_BOLD,
+    ExtraBold   = FW_EXTRABOLD,
+    Heavy       = FW_HEAVY,
+    UltraLight  = FW_ULTRALIGHT,
+    Regular     = FW_NORMAL,
+    DemiBold    = FW_SEMIBOLD,
+    UltraBold   = FW_EXTRABOLD,
+    Black       = FW_HEAVY
   );
 
   Console = class
   strict private
   type
-    TWinColor = (colBackgroundBlue = $10, colBackgroundGreen = $20, colBackgroundRed = $40, colBackgroundYellow = $60, colBackgroundIntensity = $80, colBackgroundMask = $F0, colBlack = 0,
-      colColorMask = $FF, colForegroundBlue = 1, colForegroundGreen = 2, colForegroundRed = 4, colForegroundYellow = 6, colForegroundIntensity = 8, colForegroundMask = 15);
+    TWinColor =
+    (
+        colBackgroundBlue       = $10,
+        colBackgroundGreen      = $20,
+        colBackgroundRed        = $40,
+        colBackgroundYellow     = $60,
+        colBackgroundIntensity  = $80,
+        colBackgroundMask       = $F0,
+        colBlack                = $00,
+
+        colColorMask            = $FF,
+        colForegroundBlue       =   1,
+        colForegroundGreen      =   2,
+        colForegroundRed        =   4,
+        colForegroundYellow     =   6,
+        colForegroundIntensity  =   8,
+        colForegroundMask       =  15
+    );
+
     class var DefaultTextAttributes: Word;
     class var FScreenSize: TCoord;
     class var FTextWindow: TRect;
@@ -744,6 +744,7 @@ begin
     raise EArgumentException.Create('ParamName: SourceBackColor');
 
   dwSize := GetBufferInfo.dwSize;
+
   if ((SourceLeft < 0) or (SourceLeft > dwSize.X)) then
     raise EArgumentOutOfRangeException.Create('SourceLeft ' + IntToStr(SourceLeft) + 'ArgumentOutOfRange: ConsoleBufferBoundaries');
   if ((SourceTop < 0) or (SourceTop > dwSize.Y)) then
@@ -756,6 +757,7 @@ begin
     raise EArgumentOutOfRangeException.Create('TargetLeft' + IntToStr(TargetLeft) + 'ArgumentOutOfRange: ConsoleBufferBoundaries');
   if ((TargetTop < 0) or (TargetTop > dwSize.Y)) then
     raise EArgumentOutOfRangeException.Create('TargetTop' + IntToStr(TargetTop) + 'ArgumentOutOfRange: ConsoleBufferBoundaries');
+
   if ((SourceWidth <> 0) and (SourceHeight <> 0)) then
   begin
     SetLength(CharInfoArray, (SourceWidth * SourceHeight));
@@ -870,14 +872,15 @@ end;
 
 class function Console.ReadLine: string;
 var
-  Buffer : Array[0..1024] of char;
+  Buffer : Array[0..1024] of Char;
   NumberOfCharsRead : DWORD;
 begin
   if StdIn = INVALID_HANDLE_VALUE then
     exit('');
+
   ZeroMemory(@Buffer, Length(Buffer));
   ReadConsole(StdIn, @Buffer, Length(Buffer),  NumberOfCharsRead , nil);
-  Result := Pchar(@Buffer);
+  Result := PChar(@Buffer);
 end;
 
 class procedure Console.ResetColor;
@@ -1027,7 +1030,7 @@ end;
 
 class procedure Console.SetTitle(const Value: string);
 begin
-  SetConsoleTitle(Pchar(Value));
+  SetConsoleTitle(PChar(Value));
 end;
 
 class procedure Console.SetTreatControlCAsInput(const Value: Boolean);
@@ -1141,6 +1144,7 @@ begin
     CONSOLE_FONT_INFOEX.dwFontSize.Y := aFontSize;
 
   CONSOLE_FONT_INFOEX.FontWeight := Cardinal(aFontWeight);
+
   if not SetCurrentConsoleFontEx(StdOut, FALSE, @CONSOLE_FONT_INFOEX) then
     RaiseLastOSError;
 end;
