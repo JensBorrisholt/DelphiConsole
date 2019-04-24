@@ -494,10 +494,6 @@ uses
 var
   LockObject: TObject;
 
-Type
-   TValueConverter = record
-      function ToString<T>(const aValue: T): string;
-   end;
 function Lock(ALockObject: TObject; ATimeout: Cardinal = INFINITE): Boolean;
 begin
   Result := System.TMonitor.Enter(LockObject, ATimeout)
@@ -1405,55 +1401,6 @@ class procedure Console.WriteLine;
 begin
   WriteString(sLineBreak);
 end;
-
-{ TValueConverter }
-
-function TValueConverter.ToString<T>(const aValue: T): string;
-var
-  ElementValue, Value: TValue;
-  Data: PTypeData;
-  I: Integer;
-  AContext: TRttiContext;
-  ARecord: TRttiRecordType;
-begin
-  TValue.Make(@aValue, System.TypeInfo(T), Value);
-//  Value := TValue.From(aValue);
-//
-  if Value.IsArray then
-  begin
-    if Value.GetArrayLength = 0 then
-      Exit('[ø]');
-
-    Result := '[';
-
-    for I := 0 to Value.GetArrayLength - 1 do
-    begin
-      ElementValue := Value.GetArrayElement(I);
-      Result := Result + ElementValue.ToString + ',';
-    end;
-
-    Result[Length(Result)] := ']';
-    Exit;
-  end;
-
-  Data := GetTypeData(Value.TypeInfo);
-
-  if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
-  begin
-    TValue.Make(@Data^.ClassType, System.TypeInfo(string), ElementValue);
-    Format('0x%p %s', [pointer(Value.AsObject), ElementValue.ToString]);
-  end;
-
-  if Value.TypeInfo^.Kind = tkRecord then
-  begin
-    AContext := TRttiContext.Create;
-    ARecord := AContext.GetType(Value.TypeInfo).AsRecord;
-    Exit(Format('0x%p (Record ''%s'' @ %p)', [Value.GetReferenceToRawData, ARecord.Name, Data]));
-  end;
-
-  Result := Value.ToString;
-end;
-
 
 initialization
 
