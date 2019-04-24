@@ -4,7 +4,7 @@ program WriteLineTest;
 {$R *.res}
 
 uses
-  System.SysUtils,
+  SysUtils,
   System.Console in '..\System.Console.pas';
 
 type

@@ -3,7 +3,11 @@
 interface
 
 uses
-  System.SysUtils, System.Classes, Winapi.Windows, System.UITypes, System.Types;
+  SysUtils, Classes, Windows,
+  {$IF CompilerVersion >= 22}
+  UITypes,
+  {$IFEND}
+  Types;
 
 {$M+}
 {$IFDEF CONDITIONALEXPRESSIONS}
@@ -14,13 +18,199 @@ uses
 {$WARN SYMBOL_PLATFORM OFF}
 {$SCOPEDENUMS ON}
 
-// XE4's CompilerVersion is 25
-{$IF CompilerVersion <= 25}
 const
-  vkPeriod   = $BE;
-  vkPara     = $DF;
-  vkOem102   = $E2;
-{$ENDIF}
+  Int16_MaxValue = 32767;
+{$IF CompilerVersion <= 25} //Delphi XE4
+const
+  { Virtual Keys, Standard Set }
+  vkLButton          = $01;  {   1 }
+  vkRButton          = $02;  {   2 }
+  vkCancel           = $03;  {   3 }
+  vkMButton          = $04;  {   4 }
+  vkXButton1         = $05;  {   5 }
+  vkXButton2         = $06;  {   6 }
+  vkBack             = $08;  {   8 }
+  vkTab              = $09;  {   9 }
+  vkLineFeed         = $0A;  {  10 }
+  vkClear            = $0C;  {  12 }
+  vkReturn           = $0D;  {  13 }
+  vkShift            = $10;  {  16 }
+  vkControl          = $11;  {  17 }
+  vkMenu             = $12;  {  18 }
+  vkPause            = $13;  {  19 }
+  vkCapital          = $14;  {  20 }
+  vkKana             = $15;  {  21 }
+  vkHangul           = $15;  {  21 }
+  vkJunja            = $17;  {  23 }
+  vkFinal            = $18;  {  24 }
+  vkHanja            = $19;  {  25 }
+  vkKanji            = $19;  {  25 }
+  vkConvert          = $1C;  {  28 }
+  vkNonConvert       = $1D;  {  29 }
+  vkAccept           = $1E;  {  30 }
+  vkModeChange       = $1F;  {  31 }
+  vkEscape           = $1B;  {  27 }
+  vkSpace            = $20;  {  32 }
+  vkPrior            = $21;  {  33 }
+  vkNext             = $22;  {  34 }
+  vkEnd              = $23;  {  35 }
+  vkHome             = $24;  {  36 }
+  vkLeft             = $25;  {  37 }
+  vkUp               = $26;  {  38 }
+  vkRight            = $27;  {  39 }
+  vkDown             = $28;  {  40 }
+  vkSelect           = $29;  {  41 }
+  vkPrint            = $2A;  {  42 }
+  vkExecute          = $2B;  {  43 }
+  vkSnapshot         = $2C;  {  44 }
+  vkInsert           = $2D;  {  45 }
+  vkDelete           = $2E;  {  46 }
+  vkHelp             = $2F;  {  47 }
+  { vk0 thru vk9 are the same as ASCII '0' thru '9' ($30 - $39) }
+  vk0                = $30;  {  48 }
+  vk1                = $31;  {  49 }
+  vk2                = $32;  {  50 }
+  vk3                = $33;  {  51 }
+  vk4                = $34;  {  52 }
+  vk5                = $35;  {  53 }
+  vk6                = $36;  {  54 }
+  vk7                = $37;  {  55 }
+  vk8                = $38;  {  56 }
+  vk9                = $39;  {  57 }
+  { vkA thru vkZ are the same as ASCII 'A' thru 'Z' ($41 - $5A) }
+  vkA                = $41;  {  65 }
+  vkB                = $42;  {  66 }
+  vkC                = $43;  {  67 }
+  vkD                = $44;  {  68 }
+  vkE                = $45;  {  69 }
+  vkF                = $46;  {  70 }
+  vkG                = $47;  {  71 }
+  vkH                = $48;  {  72 }
+  vkI                = $49;  {  73 }
+  vkJ                = $4A;  {  74 }
+  vkK                = $4B;  {  75 }
+  vkL                = $4C;  {  76 }
+  vkM                = $4D;  {  77 }
+  vkN                = $4E;  {  78 }
+  vkO                = $4F;  {  79 }
+  vkP                = $50;  {  80 }
+  vkQ                = $51;  {  81 }
+  vkR                = $52;  {  82 }
+  vkS                = $53;  {  83 }
+  vkT                = $54;  {  84 }
+  vkU                = $55;  {  85 }
+  vkV                = $56;  {  86 }
+  vkW                = $57;  {  87 }
+  vkX                = $58;  {  88 }
+  vkY                = $59;  {  89 }
+  vkZ                = $5A;  {  90 }
+  vkLWin             = $5B;  {  91 }
+  vkRWin             = $5C;  {  92 }
+  vkApps             = $5D;  {  93 }
+  vkSleep            = $5F;  {  95 }
+  vkNumpad0          = $60;  {  96 }
+  vkNumpad1          = $61;  {  97 }
+  vkNumpad2          = $62;  {  98 }
+  vkNumpad3          = $63;  {  99 }
+  vkNumpad4          = $64;  { 100 }
+  vkNumpad5          = $65;  { 101 }
+  vkNumpad6          = $66;  { 102 }
+  vkNumpad7          = $67;  { 103 }
+  vkNumpad8          = $68;  { 104 }
+  vkNumpad9          = $69;  { 105 }
+  vkMultiply         = $6A;  { 106 }
+  vkAdd              = $6B;  { 107 }
+  vkSeparator        = $6C;  { 108 }
+  vkSubtract         = $6D;  { 109 }
+  vkDecimal          = $6E;  { 110 }
+  vkDivide           = $6F;  { 111 }
+  vkF1               = $70;  { 112 }
+  vkF2               = $71;  { 113 }
+  vkF3               = $72;  { 114 }
+  vkF4               = $73;  { 115 }
+  vkF5               = $74;  { 116 }
+  vkF6               = $75;  { 117 }
+  vkF7               = $76;  { 118 }
+  vkF8               = $77;  { 119 }
+  vkF9               = $78;  { 120 }
+  vkF10              = $79;  { 121 }
+  vkF11              = $7A;  { 122 }
+  vkF12              = $7B;  { 123 }
+  vkF13              = $7C;  { 124 }
+  vkF14              = $7D;  { 125 }
+  vkF15              = $7E;  { 126 }
+  vkF16              = $7F;  { 127 }
+  vkF17              = $80;  { 128 }
+  vkF18              = $81;  { 129 }
+  vkF19              = $82;  { 130 }
+  vkF20              = $83;  { 131 }
+  vkF21              = $84;  { 132 }
+  vkF22              = $85;  { 133 }
+  vkF23              = $86;  { 134 }
+  vkF24              = $87;  { 135 }
+
+  vkCamera           = $88;  { 136 }
+  vkHardwareBack     = $89;  { 137 }
+
+  vkNumLock          = $90;  { 144 }
+  vkScroll           = $91;  { 145 }
+  vkLShift           = $A0;  { 160 }
+  vkRShift           = $A1;  { 161 }
+  vkLControl         = $A2;  { 162 }
+  vkRControl         = $A3;  { 163 }
+  vkLMenu            = $A4;  { 164 }
+  vkRMenu            = $A5;  { 165 }
+
+  vkBrowserBack      = $A6;  { 166 }
+  vkBrowserForward   = $A7;  { 167 }
+  vkBrowserRefresh   = $A8;  { 168 }
+  vkBrowserStop      = $A9;  { 169 }
+  vkBrowserSearch    = $AA;  { 170 }
+  vkBrowserFavorites = $AB;  { 171 }
+  vkBrowserHome      = $AC;  { 172 }
+  vkVolumeMute       = $AD;  { 173 }
+  vkVolumeDown       = $AE;  { 174 }
+  vkVolumeUp         = $AF;  { 175 }
+  vkMediaNextTrack   = $B0;  { 176 }
+  vkMediaPrevTrack   = $B1;  { 177 }
+  vkMediaStop        = $B2;  { 178 }
+  vkMediaPlayPause   = $B3;  { 179 }
+  vkLaunchMail       = $B4;  { 180 }
+  vkLaunchMediaSelect= $B5;  { 181 }
+  vkLaunchApp1       = $B6;  { 182 }
+  vkLaunchApp2       = $B7;  { 183 }
+
+  vkSemicolon        = $BA;  { 186 }
+  vkEqual            = $BB;  { 187 }
+  vkComma            = $BC;  { 188 }
+  vkMinus            = $BD;  { 189 }
+  vkPeriod           = $BE;  { 190 }
+  vkSlash            = $BF;  { 191 }
+  vkTilde            = $C0;  { 192 }
+  vkLeftBracket      = $DB;  { 219 }
+  vkBackslash        = $DC;  { 220 }
+  vkRightBracket     = $DD;  { 221 }
+  vkQuote            = $DE;  { 222 }
+  vkPara             = $DF;  { 223 }
+
+  vkOem102           = $E2;  { 226 }
+  vkIcoHelp          = $E3;  { 227 }
+  vkIco00            = $E4;  { 228 }
+  vkProcessKey       = $E5;  { 229 }
+  vkIcoClear         = $E6;  { 230 }
+  vkPacket           = $E7;  { 231 }
+  vkAttn             = $F6;  { 246 }
+  vkCrsel            = $F7;  { 247 }
+  vkExsel            = $F8;  { 248 }
+  vkErEof            = $F9;  { 249 }
+  vkPlay             = $FA;  { 250 }
+  vkZoom             = $FB;  { 251 }
+  vkNoname           = $FC;  { 252 }
+  vkPA1              = $FD;  { 253 }
+  vkOemClear         = $FE;  { 254 }
+  vkNone             = $FF;  { 255 }
+  {$IFEND}
+
 
 
 type
@@ -215,8 +405,8 @@ type
     class procedure SetWindowWidth(const Value: Integer); static;
     class function GetWindowHeight: Integer; static;
     class procedure SetWindowHeight(const Value: Integer); static;
-    class function GetOutputEncoding: TEncoding; static;
-    class procedure SetOutputEncoding(const Value: TEncoding); static;
+    class function GetOutputEncoding: DWORD; static;
+    class procedure SetOutputEncoding(const Value: DWORD); static;
     class function GetConsoleFont: TCONSOLE_FONT_INFOEX; static;
     class procedure SetConsoleFont(const Value: TCONSOLE_FONT_INFOEX); static;
   public
@@ -283,7 +473,7 @@ type
     class property KeyAvailable: Boolean read GetKeyAvailable;
     class property LargestWindowWidth: Integer read GetLargestWindowWidth;
     class property LargestWindowHeight: Integer read GetLargestWindowHeight;
-    class property OutputEncoding: TEncoding read GetOutputEncoding write SetOutputEncoding;
+    class property OutputEncoding: DWORD read GetOutputEncoding write SetOutputEncoding;
 
     class property WindowHeight: Integer read GetWindowHeight write SetWindowHeight;
     class property WindowWidth: Integer read GetWindowWidth write SetWindowWidth;
@@ -302,7 +492,7 @@ function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; Co
 implementation
 
 uses
-  System.StrUtils, System.RTTI, System.TypInfo;
+  StrUtils, RTTI, TypInfo;
 
 var
   LockObject: TObject;
@@ -345,7 +535,10 @@ end;
 
 class procedure Console.Beep(Frequency, Duration: Cardinal);
 begin
-  Winapi.Windows.Beep(Frequency, Duration);
+  {$IF CompilerVersion >= 23}
+  Winapi.
+  {$IFEND}
+  Windows.Beep(Frequency, Duration);
 end;
 
 class procedure Console.Clear;
@@ -482,7 +675,10 @@ end;
 
 class procedure Console.FreeConsole;
 begin
-  Winapi.Windows.FreeConsole;
+  {$IF CompilerVersion >= 23}
+  Winapi.
+  {$IFEND}
+  Windows.FreeConsole;
 end;
 
 class function Console.GenericToString<T>(aValue: T): string;
@@ -652,9 +848,9 @@ begin
   Result := GetLargestConsoleWindowSize(ConsoleOutputHandle).X
 end;
 
-class function Console.GetOutputEncoding: TEncoding;
+class function Console.GetOutputEncoding: DWORD;
 begin
-  Result := TEncoding.GetEncoding(GetConsoleOutputCP);
+  Result := GetConsoleOutputCP;
 end;
 
 class function Console.GetTitle: string;
@@ -662,7 +858,7 @@ var
   TitleLength: Integer;
 begin
   if GetConsoleWindow = 0 then
-    exit(string.Empty);
+    exit('');
 
   TitleLength := GetWindowTextLength(GetConsoleWindow);
   SetLength(Result, TitleLength);
@@ -1023,9 +1219,9 @@ begin
   SetConsoleTextAttribute(StdOut, TextAttr);
 end;
 
-class procedure Console.SetOutputEncoding(const Value: TEncoding);
+class procedure Console.SetOutputEncoding(const Value: DWORD);
 begin
-  SetConsoleOutputCP(Value.CodePage);
+  SetConsoleOutputCP(Value);
 end;
 
 class procedure Console.SetTitle(const Value: string);
@@ -1079,8 +1275,8 @@ begin
 
   if BufferInfo.dwSize.X < BufferInfo.srWindow.Left + Width then
   begin
-    if BufferInfo.srWindow.Left >= Int16.MaxValue - Width then
-      raise EArgumentOutOfRangeException.Create('Width must be a positive number required and les than ' + Int16.MaxValue.ToString);
+    if BufferInfo.srWindow.Left >= Int16_MaxValue - Width then
+      raise EArgumentOutOfRangeException.Create('Width must be a positive number required and les than ' + IntToStr(Int16_MaxValue));
 
     Size.X := Short(BufferInfo.srWindow.Left + Width);
     ResizeBuffer := True;
@@ -1088,8 +1284,8 @@ begin
 
   if BufferInfo.dwSize.Y < BufferInfo.srWindow.Top + Height then
   begin
-    if BufferInfo.srWindow.Top >= Int16.MaxValue - Height then
-      raise EArgumentOutOfRangeException.Create('Height must be a positive number required and lesthan ' + Int16.MaxValue.ToString);
+    if BufferInfo.srWindow.Top >= Int16_MaxValue - Height then
+      raise EArgumentOutOfRangeException.Create('Height must be a positive number required and lesthan ' + IntToStr(Int16_MaxValue));
     Size.Y := Short(BufferInfo.srWindow.Top + Height);
     ResizeBuffer := True;
   end;
@@ -1108,9 +1304,9 @@ begin
     // Try to give a better error message here
     Size := GetLargestConsoleWindowSize(ConsoleOutputHandle);
     if Width > Size.X then
-      raise EArgumentOutOfRangeException.Create(Width.ToString + 'Is out of range for Console width');
+      raise EArgumentOutOfRangeException.Create(IntToStr(Width) + 'Is out of range for Console width');
     if Height > Size.Y then
-      raise EArgumentOutOfRangeException.Create(Height.ToString + 'Is out of range for Console height');
+      raise EArgumentOutOfRangeException.Create(IntToStr(Height) + 'Is out of range for Console height');
 
     RaiseLastOSError;
   end;
@@ -1133,7 +1329,7 @@ var
 begin
   CONSOLE_FONT_INFOEX := ConsoleFont;
   CONSOLE_FONT_INFOEX.FontFamily := Cardinal(aFontFamily);
-  if aFontName <> string.Empty then
+  if aFontName <> '' then
   begin
     Destination := @CONSOLE_FONT_INFOEX.FaceName[0];
     StrLCopy(Destination, PChar(aFontName), LF_FACESIZE - 1);
@@ -1175,7 +1371,7 @@ var
 begin
   S := Value;
   for I := 0 to high(Args) do
-    S := ReplaceStr(S, '{' + I.ToString + '}', '%' + I.ToString + ':s');
+    S := ReplaceStr(S, '{' + IntToStr(I) + '}', '%' + IntToStr(I) + ':s');
 
   WriteString(Format(S, Args));
 end;
@@ -1186,7 +1382,7 @@ var
   VarRecArray: array of TVarRec;
 begin
   for I := 0 to high(Args) do
-    FormatString := ReplaceStr(FormatString, '{' + I.ToString + '}', '%' + I.ToString + ':s');
+    FormatString := ReplaceStr(FormatString, '{' + IntToStr(I) + '}', '%' + IntToStr(I) + ':s');
 
   SetLength(VarRecArray, Length(Args));
 
