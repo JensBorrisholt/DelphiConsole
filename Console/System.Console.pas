@@ -212,7 +212,6 @@ const
   {$IFEND}
 
 
-
 type
   ECOnsoleError = class(Exception);
   TConsoleColor = (
@@ -324,28 +323,26 @@ type
     Black       = FW_HEAVY
   );
 
+   TWinColor =
+  (
+      colBackgroundBlue       = $10,
+      colBackgroundGreen      = $20,
+      colBackgroundRed        = $40,
+      colBackgroundYellow     = $60,
+      colBackgroundIntensity  = $80,
+      colBackgroundMask       = $F0,
+      colBlack                = $00,
+
+      colColorMask            = $FF,
+      colForegroundBlue       =   1,
+      colForegroundGreen      =   2,
+      colForegroundRed        =   4,
+      colForegroundYellow     =   6,
+      colForegroundIntensity  =   8,
+      colForegroundMask       =  15
+  );
   Console = class
-  strict private
-  type
-    TWinColor =
-    (
-        colBackgroundBlue       = $10,
-        colBackgroundGreen      = $20,
-        colBackgroundRed        = $40,
-        colBackgroundYellow     = $60,
-        colBackgroundIntensity  = $80,
-        colBackgroundMask       = $F0,
-        colBlack                = $00,
-
-        colColorMask            = $FF,
-        colForegroundBlue       =   1,
-        colForegroundGreen      =   2,
-        colForegroundRed        =   4,
-        colForegroundYellow     =   6,
-        colForegroundIntensity  =   8,
-        colForegroundMask       =  15
-    );
-
+  private
     class var DefaultTextAttributes: Word;
     class var FScreenSize: TCoord;
     class var FTextWindow: TRect;
@@ -497,6 +494,10 @@ uses
 var
   LockObject: TObject;
 
+Type
+   TValueConverter = record
+      function ToString<T>(const aValue: T): string;
+   end;
 function Lock(ALockObject: TObject; ATimeout: Cardinal = INFINITE): Boolean;
 begin
   Result := System.TMonitor.Enter(LockObject, ATimeout)
@@ -689,7 +690,7 @@ var
   AContext: TRttiContext;
   ARecord: TRttiRecordType;
 begin
-  Value := TValue.From(aValue);
+  TValue.Make(@aValue, System.TypeInfo(T), Value);
 
   if Value.IsArray then
   begin
@@ -711,7 +712,10 @@ begin
   Data := GetTypeData(Value.TypeInfo);
 
   if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
-    Exit(Format('0x%p %s', [pointer(Value.AsObject), TValue.From(Data^.ClassType).ToString]));
+  begin
+    TValue.Make(@Data^.ClassType, System.TypeInfo(string), ElementValue);
+    Format('0x%p %s', [pointer(Value.AsObject), ElementValue.ToString]);
+  end;
 
   if Value.TypeInfo^.Kind = tkRecord then
   begin
@@ -1402,6 +1406,55 @@ begin
   WriteString(sLineBreak);
 end;
 
+{ TValueConverter }
+
+function TValueConverter.ToString<T>(const aValue: T): string;
+var
+  ElementValue, Value: TValue;
+  Data: PTypeData;
+  I: Integer;
+  AContext: TRttiContext;
+  ARecord: TRttiRecordType;
+begin
+  TValue.Make(@aValue, System.TypeInfo(T), Value);
+//  Value := TValue.From(aValue);
+//
+  if Value.IsArray then
+  begin
+    if Value.GetArrayLength = 0 then
+      Exit('[ø]');
+
+    Result := '[';
+
+    for I := 0 to Value.GetArrayLength - 1 do
+    begin
+      ElementValue := Value.GetArrayElement(I);
+      Result := Result + ElementValue.ToString + ',';
+    end;
+
+    Result[Length(Result)] := ']';
+    Exit;
+  end;
+
+  Data := GetTypeData(Value.TypeInfo);
+
+  if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
+  begin
+    TValue.Make(@Data^.ClassType, System.TypeInfo(string), ElementValue);
+    Format('0x%p %s', [pointer(Value.AsObject), ElementValue.ToString]);
+  end;
+
+  if Value.TypeInfo^.Kind = tkRecord then
+  begin
+    AContext := TRttiContext.Create;
+    ARecord := AContext.GetType(Value.TypeInfo).AsRecord;
+    Exit(Format('0x%p (Record ''%s'' @ %p)', [Value.GetReferenceToRawData, ARecord.Name, Data]));
+  end;
+
+  Result := Value.ToString;
+end;
+
+
 initialization
 
 LockObject := TObject.Create;
@@ -1411,3 +1464,6 @@ finalization
 LockObject.Free;
 
 end.
+
+
+

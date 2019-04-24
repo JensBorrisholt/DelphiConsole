@@ -1,7 +1,7 @@
 program ConsoleFromGUI;
 
 uses
-  Vcl.Forms,
+  Forms,
   MainU in 'MainU.pas' {FormMain},
   System.Console in '..\System.Console.pas';
 

@@ -35,9 +35,9 @@ begin
   s := StringOfChar('*', 40);
   t := s;
   aValue := ' ' + aValue + ' ';
-  i := (s.Length - aValue.Length) div 2;
+  i := (Length(s) - Length(aValue)) div 2;
 
-  Move(aValue[1], s[i], aValue.Length * SizeOf(s[1]));
+  Move(aValue[1], s[i], Length(aValue) * SizeOf(s[1]));
 
   if Console.CursorTop <> 0 then
     Console.WriteLine;
