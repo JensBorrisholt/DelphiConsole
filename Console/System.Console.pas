@@ -3,9 +3,11 @@
 interface
 
 uses
-  SysUtils, Classes, Windows,
+  SysUtils, Classes,
   {$IF CompilerVersion >= 22}
-  UITypes,
+  UITypes, Winapi.Windows,
+  {$ELSE}
+    Windows,
   {$IFEND}
   Types;
 
@@ -20,7 +22,7 @@ uses
 
 const
   Int16_MaxValue = 32767;
-{$IF CompilerVersion <= 25} //Delphi XE4
+{$IF CompilerVersion <= 2500} //Delphi XE4
 const
   { Virtual Keys, Standard Set }
   vkLButton          = $01;  {   1 }
@@ -708,10 +710,7 @@ begin
   Data := GetTypeData(Value.TypeInfo);
 
   if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
-  begin
-    TValue.Make(@Data^.ClassType, System.TypeInfo(string), ElementValue);
-    Format('0x%p %s', [pointer(Value.AsObject), ElementValue.ToString]);
-  end;
+     Exit(Format('0x%p %s', [pointer(Value.AsObject), Data.ClassType.ClassName]));
 
   if Value.TypeInfo^.Kind = tkRecord then
   begin

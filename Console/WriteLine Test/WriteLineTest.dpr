@@ -52,7 +52,6 @@ var
   aConsole: Console;
   MyRecord: TMyRecord;
   Obj: TObject;
-
 begin
   try
     WriteHeader('String');
