@@ -8,9 +8,14 @@ uses
 {$R *.res}
 
 begin
-  if Console.AttatchConsole then
+  if Console.IsAttached then
   begin
     Console.WriteLine('Print text in current Console Window.');
+
+    if Console.IsAttached then
+      Console.WriteLine('Attaching twice to the same console returns true')
+    else
+      Console.WriteLine('I''m sad');
   end
   else
   begin // Start GUI
