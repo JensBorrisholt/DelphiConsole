@@ -408,6 +408,8 @@ type
     class procedure SetOutputEncoding(const Value: DWORD); static;
     class function GetConsoleFont: TCONSOLE_FONT_INFOEX; static;
     class procedure SetConsoleFont(const Value: TCONSOLE_FONT_INFOEX); static;
+    class procedure SetTempColor(aColors: array of TConsoleColor);
+
   public
     // Not implemented
     // class function OpenStandardError(BufferSize: Integer): TStream; overload; static;
@@ -450,6 +452,10 @@ type
     class procedure WriteLine<T>(aValue: T); overload; static;
     class procedure WriteLine(FormatString: String; Args: array of Variant); overload; static;
     class procedure WriteLine; overload; static;
+    class procedure WriteColor<T>(aValue: T; aColors: array of TConsoleColor); overload; static;
+    class procedure WriteColor(Value: Variant; Args: array of const; aColors: array of TConsoleColor); overload; static;
+    class procedure WriteColorLine<T>(aValue: T; aColors: array of TConsoleColor); overload; static;
+    class procedure WriteColorLine(FormatString: String; Args: array of Variant; aColors: array of TConsoleColor); overload; static;
 
     // properties
     class property AutoAllocateConsole : Boolean read FAutoAllocateConsole write FAutoAllocateConsole;
@@ -1315,6 +1321,14 @@ begin
   SetWindowSize(Value, WindowHeight);
 end;
 
+class procedure Console.SetTempColor(aColors: array of TConsoleColor);
+begin
+  if Length(aColors) > 0 then
+    SetForegroundColor(aColors[0]);
+  if Length(aColors) > 1 then
+    SetBackgroundColor(aColors[1]);
+end;
+
 class procedure Console.UpdateConsoleFont(const aFontName: string; aFontSize: Cardinal; aFontFamily: TFontFamily; aFontWeight: TFontWeight);
 var
   CONSOLE_FONT_INFOEX: TCONSOLE_FONT_INFOEX;
@@ -1396,5 +1410,48 @@ class procedure Console.WriteLine;
 begin
   WriteString(sLineBreak);
 end;
+
+class procedure Console.WriteColor(Value: Variant; Args: array of const;
+  aColors: array of TConsoleColor);
+begin
+  SetTempColor(aColors);
+  try
+    Write(Value, Args);
+  finally
+    ResetColor;
+  end;
+end;
+
+class procedure Console.WriteColor<T>(aValue: T; aColors: array of TConsoleColor);
+begin
+  SetTempColor(aColors);
+  try
+    Write(aValue);
+  finally
+    ResetColor;
+  end;
+end;
+
+class procedure Console.WriteColorLine(FormatString: String;
+  Args: array of Variant; aColors: array of TConsoleColor);
+begin
+  SetTempColor(aColors);
+  try
+    WriteLine(FormatString, Args);
+  finally
+    ResetColor;
+  end;
+end;
+
+class procedure Console.WriteColorLine<T>(aValue: T; aColors: array of TConsoleColor);
+begin
+  SetTempColor(aColors);
+  try
+    WriteLine(aValue);
+  finally
+    ResetColor;
+  end;
+end;
+
 
 end.
