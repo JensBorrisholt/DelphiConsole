@@ -626,8 +626,8 @@ begin
   Rewrite(Output);
   Rewrite(ErrOutput);
 
-  FTextAttr := GetBufferInfo.wAttributes and $FF;
-  FDefaultTextAttributes := FTextAttr;
+  FDefaultTextAttributes := GetBufferInfo.wAttributes and $FF;
+  FTextAttr := FDefaultTextAttributes;
 
   if not GetConsoleScreenBufferInfo(FStdOut, BufferInfo) then
   begin
@@ -1073,6 +1073,7 @@ end;
 
 class procedure Console.ResetColor;
 begin
+  FTextAttr := FDefaultTextAttributes;
   SetConsoleTextAttribute(FStdOut, FDefaultTextAttributes);
 end;
 
