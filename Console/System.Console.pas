@@ -503,8 +503,8 @@ function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: Bool; Co
 { Console }
 
 class function Console.IsAttached: Boolean;
-// const
-// ATTACH_PARENT_PROCESS : UINT = $0ffffffff;
+const
+ ATTACH_PARENT_PROCESS : UINT = $0ffffffff;
 var
   Success: Boolean;
 begin
