@@ -4,11 +4,11 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF CompilerVersion >= 22}
+{$IF CompilerVersion >= 22}
   UITypes, Winapi.Windows,
-  {$ELSE}
-    Windows,
-  {$IFEND}
+{$ELSE}
+  Windows,
+{$IFEND}
   Types;
 
 {$M+}
@@ -22,254 +22,226 @@ uses
 
 const
   Int16_MaxValue = 32767;
-{$IF CompilerVersion <= 2500} //Delphi XE4
+{$IF CompilerVersion <= 2500}
+// Delphi XE4
 const
   { Virtual Keys, Standard Set }
-  vkLButton          = $01;  {   1 }
-  vkRButton          = $02;  {   2 }
-  vkCancel           = $03;  {   3 }
-  vkMButton          = $04;  {   4 }
-  vkXButton1         = $05;  {   5 }
-  vkXButton2         = $06;  {   6 }
-  vkBack             = $08;  {   8 }
-  vkTab              = $09;  {   9 }
-  vkLineFeed         = $0A;  {  10 }
-  vkClear            = $0C;  {  12 }
-  vkReturn           = $0D;  {  13 }
-  vkShift            = $10;  {  16 }
-  vkControl          = $11;  {  17 }
-  vkMenu             = $12;  {  18 }
-  vkPause            = $13;  {  19 }
-  vkCapital          = $14;  {  20 }
-  vkKana             = $15;  {  21 }
-  vkHangul           = $15;  {  21 }
-  vkJunja            = $17;  {  23 }
-  vkFinal            = $18;  {  24 }
-  vkHanja            = $19;  {  25 }
-  vkKanji            = $19;  {  25 }
-  vkConvert          = $1C;  {  28 }
-  vkNonConvert       = $1D;  {  29 }
-  vkAccept           = $1E;  {  30 }
-  vkModeChange       = $1F;  {  31 }
-  vkEscape           = $1B;  {  27 }
-  vkSpace            = $20;  {  32 }
-  vkPrior            = $21;  {  33 }
-  vkNext             = $22;  {  34 }
-  vkEnd              = $23;  {  35 }
-  vkHome             = $24;  {  36 }
-  vkLeft             = $25;  {  37 }
-  vkUp               = $26;  {  38 }
-  vkRight            = $27;  {  39 }
-  vkDown             = $28;  {  40 }
-  vkSelect           = $29;  {  41 }
-  vkPrint            = $2A;  {  42 }
-  vkExecute          = $2B;  {  43 }
-  vkSnapshot         = $2C;  {  44 }
-  vkInsert           = $2D;  {  45 }
-  vkDelete           = $2E;  {  46 }
-  vkHelp             = $2F;  {  47 }
+  vkLButton = $01; { 1 }
+  vkRButton = $02; { 2 }
+  vkCancel = $03; { 3 }
+  vkMButton = $04; { 4 }
+  vkXButton1 = $05; { 5 }
+  vkXButton2 = $06; { 6 }
+  vkBack = $08; { 8 }
+  vkTab = $09; { 9 }
+  vkLineFeed = $0A; { 10 }
+  vkClear = $0C; { 12 }
+  vkReturn = $0D; { 13 }
+  vkShift = $10; { 16 }
+  vkControl = $11; { 17 }
+  vkMenu = $12; { 18 }
+  vkPause = $13; { 19 }
+  vkCapital = $14; { 20 }
+  vkKana = $15; { 21 }
+  vkHangul = $15; { 21 }
+  vkJunja = $17; { 23 }
+  vkFinal = $18; { 24 }
+  vkHanja = $19; { 25 }
+  vkKanji = $19; { 25 }
+  vkConvert = $1C; { 28 }
+  vkNonConvert = $1D; { 29 }
+  vkAccept = $1E; { 30 }
+  vkModeChange = $1F; { 31 }
+  vkEscape = $1B; { 27 }
+  vkSpace = $20; { 32 }
+  vkPrior = $21; { 33 }
+  vkNext = $22; { 34 }
+  vkEnd = $23; { 35 }
+  vkHome = $24; { 36 }
+  vkLeft = $25; { 37 }
+  vkUp = $26; { 38 }
+  vkRight = $27; { 39 }
+  vkDown = $28; { 40 }
+  vkSelect = $29; { 41 }
+  vkPrint = $2A; { 42 }
+  vkExecute = $2B; { 43 }
+  vkSnapshot = $2C; { 44 }
+  vkInsert = $2D; { 45 }
+  vkDelete = $2E; { 46 }
+  vkHelp = $2F; { 47 }
   { vk0 thru vk9 are the same as ASCII '0' thru '9' ($30 - $39) }
-  vk0                = $30;  {  48 }
-  vk1                = $31;  {  49 }
-  vk2                = $32;  {  50 }
-  vk3                = $33;  {  51 }
-  vk4                = $34;  {  52 }
-  vk5                = $35;  {  53 }
-  vk6                = $36;  {  54 }
-  vk7                = $37;  {  55 }
-  vk8                = $38;  {  56 }
-  vk9                = $39;  {  57 }
+  vk0 = $30; { 48 }
+  vk1 = $31; { 49 }
+  vk2 = $32; { 50 }
+  vk3 = $33; { 51 }
+  vk4 = $34; { 52 }
+  vk5 = $35; { 53 }
+  vk6 = $36; { 54 }
+  vk7 = $37; { 55 }
+  vk8 = $38; { 56 }
+  vk9 = $39; { 57 }
   { vkA thru vkZ are the same as ASCII 'A' thru 'Z' ($41 - $5A) }
-  vkA                = $41;  {  65 }
-  vkB                = $42;  {  66 }
-  vkC                = $43;  {  67 }
-  vkD                = $44;  {  68 }
-  vkE                = $45;  {  69 }
-  vkF                = $46;  {  70 }
-  vkG                = $47;  {  71 }
-  vkH                = $48;  {  72 }
-  vkI                = $49;  {  73 }
-  vkJ                = $4A;  {  74 }
-  vkK                = $4B;  {  75 }
-  vkL                = $4C;  {  76 }
-  vkM                = $4D;  {  77 }
-  vkN                = $4E;  {  78 }
-  vkO                = $4F;  {  79 }
-  vkP                = $50;  {  80 }
-  vkQ                = $51;  {  81 }
-  vkR                = $52;  {  82 }
-  vkS                = $53;  {  83 }
-  vkT                = $54;  {  84 }
-  vkU                = $55;  {  85 }
-  vkV                = $56;  {  86 }
-  vkW                = $57;  {  87 }
-  vkX                = $58;  {  88 }
-  vkY                = $59;  {  89 }
-  vkZ                = $5A;  {  90 }
-  vkLWin             = $5B;  {  91 }
-  vkRWin             = $5C;  {  92 }
-  vkApps             = $5D;  {  93 }
-  vkSleep            = $5F;  {  95 }
-  vkNumpad0          = $60;  {  96 }
-  vkNumpad1          = $61;  {  97 }
-  vkNumpad2          = $62;  {  98 }
-  vkNumpad3          = $63;  {  99 }
-  vkNumpad4          = $64;  { 100 }
-  vkNumpad5          = $65;  { 101 }
-  vkNumpad6          = $66;  { 102 }
-  vkNumpad7          = $67;  { 103 }
-  vkNumpad8          = $68;  { 104 }
-  vkNumpad9          = $69;  { 105 }
-  vkMultiply         = $6A;  { 106 }
-  vkAdd              = $6B;  { 107 }
-  vkSeparator        = $6C;  { 108 }
-  vkSubtract         = $6D;  { 109 }
-  vkDecimal          = $6E;  { 110 }
-  vkDivide           = $6F;  { 111 }
-  vkF1               = $70;  { 112 }
-  vkF2               = $71;  { 113 }
-  vkF3               = $72;  { 114 }
-  vkF4               = $73;  { 115 }
-  vkF5               = $74;  { 116 }
-  vkF6               = $75;  { 117 }
-  vkF7               = $76;  { 118 }
-  vkF8               = $77;  { 119 }
-  vkF9               = $78;  { 120 }
-  vkF10              = $79;  { 121 }
-  vkF11              = $7A;  { 122 }
-  vkF12              = $7B;  { 123 }
-  vkF13              = $7C;  { 124 }
-  vkF14              = $7D;  { 125 }
-  vkF15              = $7E;  { 126 }
-  vkF16              = $7F;  { 127 }
-  vkF17              = $80;  { 128 }
-  vkF18              = $81;  { 129 }
-  vkF19              = $82;  { 130 }
-  vkF20              = $83;  { 131 }
-  vkF21              = $84;  { 132 }
-  vkF22              = $85;  { 133 }
-  vkF23              = $86;  { 134 }
-  vkF24              = $87;  { 135 }
+  vkA = $41; { 65 }
+  vkB = $42; { 66 }
+  vkC = $43; { 67 }
+  vkD = $44; { 68 }
+  vkE = $45; { 69 }
+  vkF = $46; { 70 }
+  vkG = $47; { 71 }
+  vkH = $48; { 72 }
+  vkI = $49; { 73 }
+  vkJ = $4A; { 74 }
+  vkK = $4B; { 75 }
+  vkL = $4C; { 76 }
+  vkM = $4D; { 77 }
+  vkN = $4E; { 78 }
+  vkO = $4F; { 79 }
+  vkP = $50; { 80 }
+  vkQ = $51; { 81 }
+  vkR = $52; { 82 }
+  vkS = $53; { 83 }
+  vkT = $54; { 84 }
+  vkU = $55; { 85 }
+  vkV = $56; { 86 }
+  vkW = $57; { 87 }
+  vkX = $58; { 88 }
+  vkY = $59; { 89 }
+  vkZ = $5A; { 90 }
+  vkLWin = $5B; { 91 }
+  vkRWin = $5C; { 92 }
+  vkApps = $5D; { 93 }
+  vkSleep = $5F; { 95 }
+  vkNumpad0 = $60; { 96 }
+  vkNumpad1 = $61; { 97 }
+  vkNumpad2 = $62; { 98 }
+  vkNumpad3 = $63; { 99 }
+  vkNumpad4 = $64; { 100 }
+  vkNumpad5 = $65; { 101 }
+  vkNumpad6 = $66; { 102 }
+  vkNumpad7 = $67; { 103 }
+  vkNumpad8 = $68; { 104 }
+  vkNumpad9 = $69; { 105 }
+  vkMultiply = $6A; { 106 }
+  vkAdd = $6B; { 107 }
+  vkSeparator = $6C; { 108 }
+  vkSubtract = $6D; { 109 }
+  vkDecimal = $6E; { 110 }
+  vkDivide = $6F; { 111 }
+  vkF1 = $70; { 112 }
+  vkF2 = $71; { 113 }
+  vkF3 = $72; { 114 }
+  vkF4 = $73; { 115 }
+  vkF5 = $74; { 116 }
+  vkF6 = $75; { 117 }
+  vkF7 = $76; { 118 }
+  vkF8 = $77; { 119 }
+  vkF9 = $78; { 120 }
+  vkF10 = $79; { 121 }
+  vkF11 = $7A; { 122 }
+  vkF12 = $7B; { 123 }
+  vkF13 = $7C; { 124 }
+  vkF14 = $7D; { 125 }
+  vkF15 = $7E; { 126 }
+  vkF16 = $7F; { 127 }
+  vkF17 = $80; { 128 }
+  vkF18 = $81; { 129 }
+  vkF19 = $82; { 130 }
+  vkF20 = $83; { 131 }
+  vkF21 = $84; { 132 }
+  vkF22 = $85; { 133 }
+  vkF23 = $86; { 134 }
+  vkF24 = $87; { 135 }
 
-  vkCamera           = $88;  { 136 }
-  vkHardwareBack     = $89;  { 137 }
+  vkCamera = $88; { 136 }
+  vkHardwareBack = $89; { 137 }
 
-  vkNumLock          = $90;  { 144 }
-  vkScroll           = $91;  { 145 }
-  vkLShift           = $A0;  { 160 }
-  vkRShift           = $A1;  { 161 }
-  vkLControl         = $A2;  { 162 }
-  vkRControl         = $A3;  { 163 }
-  vkLMenu            = $A4;  { 164 }
-  vkRMenu            = $A5;  { 165 }
+  vkNumLock = $90; { 144 }
+  vkScroll = $91; { 145 }
+  vkLShift = $A0; { 160 }
+  vkRShift = $A1; { 161 }
+  vkLControl = $A2; { 162 }
+  vkRControl = $A3; { 163 }
+  vkLMenu = $A4; { 164 }
+  vkRMenu = $A5; { 165 }
 
-  vkBrowserBack      = $A6;  { 166 }
-  vkBrowserForward   = $A7;  { 167 }
-  vkBrowserRefresh   = $A8;  { 168 }
-  vkBrowserStop      = $A9;  { 169 }
-  vkBrowserSearch    = $AA;  { 170 }
-  vkBrowserFavorites = $AB;  { 171 }
-  vkBrowserHome      = $AC;  { 172 }
-  vkVolumeMute       = $AD;  { 173 }
-  vkVolumeDown       = $AE;  { 174 }
-  vkVolumeUp         = $AF;  { 175 }
-  vkMediaNextTrack   = $B0;  { 176 }
-  vkMediaPrevTrack   = $B1;  { 177 }
-  vkMediaStop        = $B2;  { 178 }
-  vkMediaPlayPause   = $B3;  { 179 }
-  vkLaunchMail       = $B4;  { 180 }
-  vkLaunchMediaSelect= $B5;  { 181 }
-  vkLaunchApp1       = $B6;  { 182 }
-  vkLaunchApp2       = $B7;  { 183 }
+  vkBrowserBack = $A6; { 166 }
+  vkBrowserForward = $A7; { 167 }
+  vkBrowserRefresh = $A8; { 168 }
+  vkBrowserStop = $A9; { 169 }
+  vkBrowserSearch = $AA; { 170 }
+  vkBrowserFavorites = $AB; { 171 }
+  vkBrowserHome = $AC; { 172 }
+  vkVolumeMute = $AD; { 173 }
+  vkVolumeDown = $AE; { 174 }
+  vkVolumeUp = $AF; { 175 }
+  vkMediaNextTrack = $B0; { 176 }
+  vkMediaPrevTrack = $B1; { 177 }
+  vkMediaStop = $B2; { 178 }
+  vkMediaPlayPause = $B3; { 179 }
+  vkLaunchMail = $B4; { 180 }
+  vkLaunchMediaSelect = $B5; { 181 }
+  vkLaunchApp1 = $B6; { 182 }
+  vkLaunchApp2 = $B7; { 183 }
 
-  vkSemicolon        = $BA;  { 186 }
-  vkEqual            = $BB;  { 187 }
-  vkComma            = $BC;  { 188 }
-  vkMinus            = $BD;  { 189 }
-  vkPeriod           = $BE;  { 190 }
-  vkSlash            = $BF;  { 191 }
-  vkTilde            = $C0;  { 192 }
-  vkLeftBracket      = $DB;  { 219 }
-  vkBackslash        = $DC;  { 220 }
-  vkRightBracket     = $DD;  { 221 }
-  vkQuote            = $DE;  { 222 }
-  vkPara             = $DF;  { 223 }
+  vkSemicolon = $BA; { 186 }
+  vkEqual = $BB; { 187 }
+  vkComma = $BC; { 188 }
+  vkMinus = $BD; { 189 }
+  vkPeriod = $BE; { 190 }
+  vkSlash = $BF; { 191 }
+  vkTilde = $C0; { 192 }
+  vkLeftBracket = $DB; { 219 }
+  vkBackslash = $DC; { 220 }
+  vkRightBracket = $DD; { 221 }
+  vkQuote = $DE; { 222 }
+  vkPara = $DF; { 223 }
 
-  vkOem102           = $E2;  { 226 }
-  vkIcoHelp          = $E3;  { 227 }
-  vkIco00            = $E4;  { 228 }
-  vkProcessKey       = $E5;  { 229 }
-  vkIcoClear         = $E6;  { 230 }
-  vkPacket           = $E7;  { 231 }
-  vkAttn             = $F6;  { 246 }
-  vkCrsel            = $F7;  { 247 }
-  vkExsel            = $F8;  { 248 }
-  vkErEof            = $F9;  { 249 }
-  vkPlay             = $FA;  { 250 }
-  vkZoom             = $FB;  { 251 }
-  vkNoname           = $FC;  { 252 }
-  vkPA1              = $FD;  { 253 }
-  vkOemClear         = $FE;  { 254 }
-  vkNone             = $FF;  { 255 }
-  {$IFEND}
-
+  vkOem102 = $E2; { 226 }
+  vkIcoHelp = $E3; { 227 }
+  vkIco00 = $E4; { 228 }
+  vkProcessKey = $E5; { 229 }
+  vkIcoClear = $E6; { 230 }
+  vkPacket = $E7; { 231 }
+  vkAttn = $F6; { 246 }
+  vkCrsel = $F7; { 247 }
+  vkExsel = $F8; { 248 }
+  vkErEof = $F9; { 249 }
+  vkPlay = $FA; { 250 }
+  vkZoom = $FB; { 251 }
+  vkNoname = $FC; { 252 }
+  vkPA1 = $FD; { 253 }
+  vkOemClear = $FE; { 254 }
+  vkNone = $FF; { 255 }
+{$IFEND}
 
 type
   ECOnsoleError = class(Exception);
-  TConsoleColor = (
-    Black,
-    DarkBlue,
-    DarkGreen,
-    DarkCyan,
-    DarkRed,
-    DarkMagenta,
-    DarkYellow,
-    Gray,
-    DarkGray,
-    Blue,
-    Green,
-    Cyan,
-    Red,
-    Magenta,
-    Yellow,
-    White
-    );
+  TConsoleColor = (Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White);
 
-  TConsoleKey = (
-      Backspace = vkBack,  Tab       = vkTab,    Clear = vkClear,  Enter   = vkReturn,  Pause       = vkPause,    Escape  = vkEscape,  Spacebar   = vkSpace,
-      PageUp    = vkPrior, PageDown  = vkNext,   &End  = vkEnd,    Home    = vkHome,    LeftArrow   = vkLeft,     UpArrow = vkUp,      RightArrow = vkRight,
-      DownArrow = vkDown,  Select    = vkSelect, Print = vkPrint,  Execute = vkExecute, PrintScreen = vkSnapshot, Insert  = vkInsert,  Delete     = vkDelete,
-      Help      = vkHelp,
+  TConsoleKey = (Backspace = vkBack, Tab = vkTab, Clear = vkClear, Enter = vkReturn, Pause = vkPause, Escape = vkEscape, Spacebar = vkSpace, PageUp = vkPrior, PageDown = vkNext, &End = vkEnd,
+    Home = vkHome, LeftArrow = vkLeft, UpArrow = vkUp, RightArrow = vkRight, DownArrow = vkDown, Select = vkSelect, Print = vkPrint, Execute = vkExecute, PrintScreen = vkSnapshot, Insert = vkInsert,
+    Delete = vkDelete, Help = vkHelp,
 
-      D0 = vk0,     D1 = vk1,     D2 = vk2,     D3 = vk3,     D4 = vk4,     D5 = vk5,     D6 = vk6,     D7 = vk7,      D8 = vk8,     D9 = vk9,
-      A  = vkA,      B = vkB,      C = vkC,      D = vkD,      E = vkE,      F = vkF,      G = vkG,      H = vkH,       I = vkI,      J = vkJ,
-      K  = vkK,      L = vkL,      M = vkM,      N = vkN,      O = vkO,      P = vkP,      Q = vkQ,      R = vkR,       S = vkS,      T = vkT,
-      U  = vkU,      V = vkV,      W = vkW,      X = vkX,      Y = vkY,      Z = vkZ,
+    D0 = vk0, D1 = vk1, D2 = vk2, D3 = vk3, D4 = vk4, D5 = vk5, D6 = vk6, D7 = vk7, D8 = vk8, D9 = vk9, A = vkA, B = vkB, C = vkC, D = vkD, E = vkE, F = vkF, G = vkG, H = vkH, I = vkI, J = vkJ,
+    K = vkK, L = vkL, M = vkM, N = vkN, O = vkO, P = vkP, Q = vkQ, R = vkR, S = vkS, T = vkT, U = vkU, V = vkV, W = vkW, X = vkX, Y = vkY, Z = vkZ,
 
-      LeftWindows = vkLWin,     RightWindows = vkRWin,  Applications = vkApps,      Sleep     = vkSleep,
-      Multiply    = vkMultiply, Add          = vkAdd,   Separator    = vkSeparator, Subtract  = vkSubtract, Decimal = vkDecimal, Divide = vkDivide,
+    LeftWindows = vkLWin, RightWindows = vkRWin, Applications = vkApps, Sleep = vkSleep, Multiply = vkMultiply, Add = vkAdd, Separator = vkSeparator, Subtract = vkSubtract, Decimal = vkDecimal,
+    Divide = vkDivide,
 
-      NumPad0 = vkNumpad0,      NumPad1 = vkNumpad1,      NumPad2 = vkNumpad2,      NumPad3 = vkNumpad3,      NumPad4 = vkNumpad4,
-      NumPad5 = vkNumpad5,      NumPad6 = vkNumpad6,      NumPad7 = vkNumpad7,      NumPad8 = vkNumpad8,      NumPad9 = vkNumpad9,
+    NumPad0 = vkNumpad0, NumPad1 = vkNumpad1, NumPad2 = vkNumpad2, NumPad3 = vkNumpad3, NumPad4 = vkNumpad4, NumPad5 = vkNumpad5, NumPad6 = vkNumpad6, NumPad7 = vkNumpad7, NumPad8 = vkNumpad8,
+    NumPad9 = vkNumpad9,
 
+    F1 = vkF1, F2 = vkF2, F3 = vkF3, F4 = vkF4, F5 = vkF5, F6 = vkF6, F7 = vkF7, F8 = vkF8, F9 = vkF9, F10 = vkF10, F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16,
+    F17 = vkF17, F18 = vkF18, F19 = vkF19, F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
 
-      F1  =  vkF1,   F2 =  vkF2,  F3 =  vkF3,  F4 =  vkF4,  F5 =  vkF5,  F6 =  vkF6,  F7 =  vkF7,  F8  = vkF8,   F9 =  vkF9,
-      F10 = vkF10,  F11 = vkF11, F12 = vkF12, F13 = vkF13, F14 = vkF14, F15 = vkF15, F16 = vkF16, F17 = vkF17,  F18 = vkF18,
-      F19 = vkF19,  F20 = vkF20, F21 = vkF21, F22 = vkF22, F23 = vkF23, F24 = vkF24,
+    BrowserBack = vkBrowserBack, BrowserForward = vkBrowserForward, BrowserRefresh = vkBrowserRefresh, BrowserStop = vkBrowserStop, BrowserSearch = vkBrowserSearch,
+    BrowserFavorites = vkBrowserFavorites, BrowserHome = vkBrowserHome, VolumeMute = vkVolumeMute, VolumeDown = vkVolumeDown, VolumeUp = vkVolumeUp, MediaNext = vkMediaNextTrack,
+    MediaPrevious = vkMediaPrevTrack, MediaStop = vkMediaStop, MediaPlay = vkMediaPlayPause, LaunchMail = vkLaunchMail, LaunchMediaSelect = vkLaunchMediaSelect, LaunchApp1 = vkLaunchApp1,
+    LaunchApp2 = vkLaunchApp2, Oem1 = vkSemicolon, OemPlus = vkEqual, OemComma = vkComma, OemMinus = vkMinus, OemPeriod = vkPeriod, Oem2 = vkSlash, Oem3 = vkTilde, Oem4 = vkLeftBracket,
+    Oem5 = vkBackslash, Oem6 = vkRightBracket, Oem7 = vkQuote, Oem8 = vkPara, Oem102 = vkOem102,
 
-      BrowserBack   = vkBrowserBack,    BrowserForward    = vkBrowserForward,   BrowserRefresh = vkBrowserRefresh,  BrowserStop       = vkBrowserStop,
-      BrowserSearch = vkBrowserSearch,  BrowserFavorites  = vkBrowserFavorites, BrowserHome    = vkBrowserHome,     VolumeMute        = vkVolumeMute,
-      VolumeDown    = vkVolumeDown,     VolumeUp          = vkVolumeUp,         MediaNext      = vkMediaNextTrack,  MediaPrevious     = vkMediaPrevTrack,
-      MediaStop     = vkMediaStop,      MediaPlay         = vkMediaPlayPause,   LaunchMail     = vkLaunchMail,      LaunchMediaSelect = vkLaunchMediaSelect,
-      LaunchApp1    = vkLaunchApp1,     LaunchApp2        = vkLaunchApp2,       Oem1           = vkSemicolon,       OemPlus           = vkEqual,
-      OemComma      = vkComma,          OemMinus          = vkMinus,            OemPeriod      = vkPeriod,          Oem2              = vkSlash,
-      Oem3          = vkTilde,          Oem4              = vkLeftBracket,      Oem5           = vkBackslash,       Oem6              = vkRightBracket,
-      Oem7          = vkQuote,          Oem8              = vkPara,             Oem102         = vkOem102,
-
-      Process       = vkProcessKey,     Packet            = vkPacket,           Attention      = vkAttn,            CrSel             = vkCrsel,
-      ExSel         = vkExsel,          EraseEndOfFile    = vkErEof,            Play           = vkPlay,            Zoom              = vkZoom,
-      NoName        = vkNoname,         Pa1               = vkPA1,              OemClear       = vkOemClear
-  );
+    Process = vkProcessKey, Packet = vkPacket, Attention = vkAttn, CrSel = vkCrsel, ExSel = vkExsel, EraseEndOfFile = vkErEof, Play = vkPlay, Zoom = vkZoom, NoName = vkNoname, Pa1 = vkPA1,
+    OemClear = vkOemClear);
 
   TConsoleModifiers = (Alt, Shift, Control);
 
@@ -297,52 +269,15 @@ type
 
   pCONSOLE_FONT_INFOEX = ^TCONSOLE_FONT_INFOEX;
 
-  TFontFamily =
-  (
-    ffDontCare  = FF_DONTCARE,
-    Roman       = FF_ROMAN,
-    Swiss       = FF_SWISS,
-    Modern      = FF_MODERN,
-    Script      = FF_SCRIPT,
-    Decorative  = FF_DECORATIVE
-  );
+  TFontFamily = (ffDontCare = FF_DONTCARE, Roman = FF_ROMAN, Swiss = FF_SWISS, Modern = FF_MODERN, Script = FF_SCRIPT, Decorative = FF_DECORATIVE);
 
-  TFontWeight =
-  (
-    fwDontCare  = FW_DONTCARE,
-    Thin        = FW_THIN,
-    ExtraLight  = FW_EXTRALIGHT,
-    Normal      = FW_NORMAL,
-    Medium      = FW_MEDIUM,
-    SemiBold    = FW_SEMIBOLD,
-    Bold        = FW_BOLD,
-    ExtraBold   = FW_EXTRABOLD,
-    Heavy       = FW_HEAVY,
-    UltraLight  = FW_ULTRALIGHT,
-    Regular     = FW_NORMAL,
-    DemiBold    = FW_SEMIBOLD,
-    UltraBold   = FW_EXTRABOLD,
-    Black       = FW_HEAVY
-  );
+  TFontWeight = (fwDontCare = FW_DONTCARE, Thin = FW_THIN, ExtraLight = FW_EXTRALIGHT, Normal = FW_NORMAL, Medium = FW_MEDIUM, SemiBold = FW_SEMIBOLD, Bold = FW_BOLD, ExtraBold = FW_EXTRABOLD,
+    Heavy = FW_HEAVY, UltraLight = FW_ULTRALIGHT, Regular = FW_NORMAL, DemiBold = FW_SEMIBOLD, UltraBold = FW_EXTRABOLD, Black = FW_HEAVY);
 
-   TWinColor =
-  (
-      colBackgroundBlue       = $10,
-      colBackgroundGreen      = $20,
-      colBackgroundRed        = $40,
-      colBackgroundYellow     = $60,
-      colBackgroundIntensity  = $80,
-      colBackgroundMask       = $F0,
-      colBlack                = $00,
+  TWinColor = (colBackgroundBlue = $10, colBackgroundGreen = $20, colBackgroundRed = $40, colBackgroundYellow = $60, colBackgroundIntensity = $80, colBackgroundMask = $F0, colBlack = $00,
 
-      colColorMask            = $FF,
-      colForegroundBlue       =   1,
-      colForegroundGreen      =   2,
-      colForegroundRed        =   4,
-      colForegroundYellow     =   6,
-      colForegroundIntensity  =   8,
-      colForegroundMask       =  15
-  );
+    colColorMask = $FF, colForegroundBlue = 1, colForegroundGreen = 2, colForegroundRed = 4, colForegroundYellow = 6, colForegroundIntensity = 8, colForegroundMask = 15);
+
   Console = class
   private
     class var FDefaultTextAttributes: Word;
@@ -352,9 +287,9 @@ type
     class var FStdIn: THandle;
     class var FStdOut: THandle;
     class var FTextAttr: Word;
-    class var FAutoAllocateConsole : Boolean;
+    class var FAutoAllocateConsole: Boolean;
 
-    class procedure RaiseConsoleError(const aCaller : String);
+    class procedure RaiseConsoleError(const aCaller: String);
     class function ConsoleColorToColorAttribute(ConsoleColor: TConsoleColor; IsBackground: Boolean): TWinColor; static;
     class function ConsoleCursorInfo: TConsoleCursorInfo;
     class function ConsoleRect: TRect;
@@ -425,7 +360,7 @@ type
     // Initialize
     class constructor Create;
     class destructor Destroy;
-    class function IsAttached : Boolean;
+    class function IsAttached: Boolean;
     class procedure AllocateConsole;
     class procedure FreeConsole;
     // Methods
@@ -458,7 +393,7 @@ type
     class procedure WriteColorLine(FormatString: String; Args: array of Variant; aColors: array of TConsoleColor); overload; static;
 
     // properties
-    class property AutoAllocateConsole : Boolean read FAutoAllocateConsole write FAutoAllocateConsole;
+    class property AutoAllocateConsole: Boolean read FAutoAllocateConsole write FAutoAllocateConsole;
     class property BackgroundColor: TConsoleColor read GetBackgroundColor write SetBackgroundColor;
     class property BufferHeight: Integer read GetBufferHeight write SetBufferHeight;
     class property BufferSize: TCoord read GetBufferSize write SetBufferSize;
@@ -495,34 +430,40 @@ uses
   StrUtils, RTTI, TypInfo;
 
 function AttachConsole(dwProcessId: DWORD): Bool; stdcall; external KERNEL32 name 'AttachConsole';
-function GetConsoleWindow: HWND; stdcall; external kernel32 name 'GetConsoleWindow';
-function GetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; ConsoleInfo: pCONSOLE_FONT_INFOEX): BOOL; stdcall; external kernel32 name 'GetCurrentConsoleFontEx';
-function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: BOOL; ConsoleInfo: pCONSOLE_FONT_INFOEX): BOOL; stdcall; external kernel32 name 'SetCurrentConsoleFontEx';
+function GetConsoleWindow: HWND; stdcall; external KERNEL32 name 'GetConsoleWindow';
+function GetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: Bool; ConsoleInfo: pCONSOLE_FONT_INFOEX): Bool; stdcall; external KERNEL32 name 'GetCurrentConsoleFontEx';
+function SetCurrentConsoleFontEx(ConsoleOutput: THandle; MaximumWindow: Bool; ConsoleInfo: pCONSOLE_FONT_INFOEX): Bool; stdcall; external KERNEL32 name 'SetCurrentConsoleFontEx';
 
 { Console }
 
 class function Console.IsAttached: Boolean;
-const
-  ATTACH_PARENT_PROCESS : UINT = $0ffffffff;
+// const
+// ATTACH_PARENT_PROCESS : UINT = $0ffffffff;
+var
+  Success: Boolean;
 begin
-  {$IFNDEF Win32}
-    if IsDebuggerPresent then
-      Exit(false);
-  (*
-    In the case of a 64-bit debug, it appears that the IDE is creating a console for the debugger,
-    which hosts the debugged application as a child, and so electing to attach to the parent console succeeds.
+// {$IFNDEF Win32}
+// if IsDebuggerPresent then
+// Exit(false);
+// (*
+// In the case of a 64-bit debug, it appears that the IDE is creating a console for the debugger,
+// which hosts the debugged application as a child, and so electing to attach to the parent console succeeds.
+//
+// This console is not created for a 32-bit debug session.
+// *)
+// {$ENDIF}
 
-    This console is not created for a 32-bit debug session.
-  *)
-  {$ENDIF}
+  Success := AttachConsole(ATTACH_PARENT_PROCESS);
 
-  Result := AttachConsole(ATTACH_PARENT_PROCESS);
-
-  if Result then
-    AllocateConsole
-  else
-    // Access denied, already attached to console, we can return true
-    Result := (GetLastError = 5);
+// if Result then
+  case GetLastError of
+    5: // Access denied: already attached to console, we can return true
+      Result := true;
+    6: // Invalid handle: we don't have a console
+      Result := false;
+  else // 187 under Win64 Debugger
+    Result := false;
+  end;
 end;
 
 class procedure Console.Beep;
@@ -532,17 +473,17 @@ end;
 
 class procedure Console.Beep(Frequency, Duration: Cardinal);
 begin
-  {$IF CompilerVersion >= 23}
+{$IF CompilerVersion >= 23}
   Winapi.
-  {$IFEND}
-  Windows.Beep(Frequency, Duration);
+{$IFEND}
+    Windows.Beep(Frequency, Duration);
 end;
 
 class procedure Console.Clear;
 var
   StartPos: TCoord;
-  Buffer : TConsoleScreenBufferInfo;
-  ConSize : Integer;
+  Buffer: TConsoleScreenBufferInfo;
+  ConSize: Integer;
   NumWritten: DWORD;
 begin
   if FStdOut = INVALID_HANDLE_VALUE then
@@ -551,15 +492,15 @@ begin
   Buffer := GetBufferInfo;
   ConSize := Buffer.dwSize.X * Buffer.dwSize.Y;
   StartPos.X := 0;
-  StartPos.y := 0;
+  StartPos.Y := 0;
 
   if not FillConsoleOutputCharacter(FStdOut, ' ', ConSize, StartPos, NumWritten) then
-     RaiseConsoleError('FillConsoleOutputCharacter in Console.Clear');
+    RaiseConsoleError('FillConsoleOutputCharacter in Console.Clear');
 
   NumWritten := 0;
 
   if not FillConsoleOutputAttribute(FStdOut, Buffer.wAttributes, ConSize, StartPos, NumWritten) then
-     RaiseConsoleError('FillConsoleOutputAttribute in Console.Clear');
+    RaiseConsoleError('FillConsoleOutputAttribute in Console.Clear');
 
   GotoXY(1, 1);
 end;
@@ -575,7 +516,7 @@ begin
 
   Pos := GetBufferInfo.dwCursorPosition;
   if Pos.X > FTextWindow.Right then
-    Exit;
+    exit;
 
   Len := FTextWindow.Right - Pos.X + 1;
   FillConsoleOutputCharacter(FStdOut, ' ', Len, Pos, NumWritten);
@@ -618,10 +559,10 @@ var
 begin
   if not System.Console.AttachConsole(DWORD(-1)) then
   begin
-     if FAutoAllocateConsole then
-       AllocConsole
-     else
-       Exit;
+    if FAutoAllocateConsole then
+      AllocConsole
+    else
+      exit;
   end;
 
   FStdIn := GetStdHandle(STD_INPUT_HANDLE);
@@ -638,7 +579,7 @@ begin
   if not GetConsoleScreenBufferInfo(FStdOut, BufferInfo) then
   begin
     SetInOutRes(GetLastError);
-    Exit;
+    exit;
   end;
 
   FTextWindow.Left := 0;
@@ -654,7 +595,7 @@ begin
   FStdIn := GetStdHandle(STD_INPUT_HANDLE);
   FStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
   FStdErr := GetStdHandle(STD_ERROR_HANDLE);
-  FAutoAllocateConsole := True;
+  FAutoAllocateConsole := true;
 
   if Console.CanGetBufferInfo then
     Console.AllocateConsole;
@@ -672,10 +613,10 @@ end;
 
 class procedure Console.FreeConsole;
 begin
-  {$IF CompilerVersion >= 23}
+{$IF CompilerVersion >= 23}
   Winapi.
-  {$IFEND}
-  Windows.FreeConsole;
+{$IFEND}
+    Windows.FreeConsole;
 end;
 
 class function Console.GenericToString<T>(aValue: T): string;
@@ -691,7 +632,7 @@ begin
   if Value.IsArray then
   begin
     if Value.GetArrayLength = 0 then
-      Exit('[ø]');
+      exit('[ø]');
 
     Result := '[';
 
@@ -702,19 +643,19 @@ begin
     end;
 
     Result[Length(Result)] := ']';
-    Exit;
+    exit;
   end;
 
   Data := GetTypeData(Value.TypeInfo);
 
   if (Value.IsObject) and (Value.TypeInfo^.Kind <> tkInterface) then
-     Exit(Format('0x%p %s', [pointer(Value.AsObject), Data.ClassType.ClassName]));
+    exit(Format('0x%p %s', [pointer(Value.AsObject), Data.ClassType.ClassName]));
 
   if Value.TypeInfo^.Kind = tkRecord then
   begin
     AContext := TRttiContext.Create;
     ARecord := AContext.GetType(Value.TypeInfo).AsRecord;
-    Exit(Format('0x%p (Record ''%s'' @ %p)', [Value.GetReferenceToRawData, ARecord.Name, Data]));
+    exit(Format('0x%p (Record ''%s'' @ %p)', [Value.GetReferenceToRawData, ARecord.Name, Data]));
   end;
 
   Result := Value.ToString;
@@ -760,7 +701,7 @@ class function Console.GetConsoleFont: TCONSOLE_FONT_INFOEX;
 begin
   FillChar(Result, SizeOf(TCONSOLE_FONT_INFOEX), 0);
   Result.cbSize := SizeOf(TCONSOLE_FONT_INFOEX);
-  GetCurrentConsoleFontEx(ConsoleOutputHandle, FALSE, @Result);
+  GetCurrentConsoleFontEx(ConsoleOutputHandle, false, @Result);
 end;
 
 class function Console.GetConsoleInputHandle: Integer;
@@ -809,7 +750,7 @@ var
   Buffer: TInputRecord;
   NumberOfEventsRead: DWORD;
 begin
-  Result := FALSE;
+  Result := false;
 
   if FStdIn = INVALID_HANDLE_VALUE then
     exit;
@@ -818,16 +759,16 @@ begin
   GetNumberOfConsoleInputEvents(FStdIn, NumberOfEvents);
 
   if NumberOfEvents = 0 then
-    Exit;
+    exit;
 
   PeekConsoleInput(FStdIn, Buffer, 1, NumberOfEventsRead);
   if NumberOfEventsRead = 0 then
-    Exit;
+    exit;
 
   if Buffer.EventType = KEY_EVENT then // is a Keyboard event?
   begin
     if Buffer.Event.KeyEvent.bKeyDown then // the key was pressed?
-      Result := True
+      Result := true
     else
       FlushConsoleInputBuffer(FStdIn); // flush the buffer
   end
@@ -866,7 +807,7 @@ class function Console.GetTreatControlCAsInput: Boolean;
 var
   Mode: Cardinal;
 begin
-  Result := FALSE;
+  Result := false;
   Mode := 0;
   if not GetConsoleMode(ConsoleInputHandle, Mode) then
     RaiseLastOSError
@@ -968,7 +909,7 @@ begin
       RaiseLastOSError;
 
     dwWriteCoord.X := SourceLeft;
-    color := TWinColor(Integer(ConsoleColorToColorAttribute(SourceBackColor, True)) or Integer(ConsoleColorToColorAttribute(SourceForeColor, FALSE)));
+    color := TWinColor(Integer(ConsoleColorToColorAttribute(SourceBackColor, true)) or Integer(ConsoleColorToColorAttribute(SourceForeColor, false)));
     wColorAttribute := color;
     I := SourceTop;
 
@@ -1014,14 +955,14 @@ begin
         Break;
       end;
     end;
-  until FALSE;
+  until false;
 
   SetConsoleMode(StdIn, KeyMode);
 end;
 
 class procedure Console.RaiseConsoleError(const aCaller: String);
 begin
-  raise ECOnsoleError.Create('Error calling ' + aCaller +':' + sLineBreak + SysErrorMessage(GetLastError));
+  raise ECOnsoleError.Create('Error calling ' + aCaller + ':' + sLineBreak + SysErrorMessage(GetLastError));
 end;
 
 class function Console.Read: Integer;
@@ -1066,14 +1007,14 @@ end;
 
 class function Console.ReadLine: string;
 var
-  Buffer : Array[0..1024] of Char;
-  NumberOfCharsRead : DWORD;
+  Buffer: Array [0 .. 1024] of Char;
+  NumberOfCharsRead: DWORD;
 begin
   if FStdIn = INVALID_HANDLE_VALUE then
     exit('');
 
   ZeroMemory(@Buffer, Length(Buffer));
-  ReadConsole(FStdIn, @Buffer, Length(Buffer),  NumberOfCharsRead , nil);
+  ReadConsole(FStdIn, @Buffer, Length(Buffer), NumberOfCharsRead, nil);
   Result := PChar(@Buffer);
 end;
 
@@ -1199,7 +1140,7 @@ end;
 
 class procedure Console.SetConsoleFont(const Value: TCONSOLE_FONT_INFOEX);
 begin
-  SetCurrentConsoleFontEx(FStdOut, FALSE, @Value);
+  SetCurrentConsoleFontEx(FStdOut, false, @Value);
 end;
 
 class procedure Console.SetConsoleInputHandle(const Value: Integer);
@@ -1267,7 +1208,7 @@ begin
     raise EArgumentOutOfRangeException.Create('Height must be a positive number required');
 
   BufferInfo := GetBufferInfo;
-  ResizeBuffer := FALSE;
+  ResizeBuffer := false;
 
   Size.X := BufferInfo.dwSize.X;
   Size.Y := BufferInfo.dwSize.Y;
@@ -1278,7 +1219,7 @@ begin
       raise EArgumentOutOfRangeException.Create('Width must be a positive number required and les than ' + IntToStr(Int16_MaxValue));
 
     Size.X := Short(BufferInfo.srWindow.Left + Width);
-    ResizeBuffer := True;
+    ResizeBuffer := true;
   end;
 
   if BufferInfo.dwSize.Y < BufferInfo.srWindow.Top + Height then
@@ -1286,7 +1227,7 @@ begin
     if BufferInfo.srWindow.Top >= Int16_MaxValue - Height then
       raise EArgumentOutOfRangeException.Create('Height must be a positive number required and lesthan ' + IntToStr(Int16_MaxValue));
     Size.Y := Short(BufferInfo.srWindow.Top + Height);
-    ResizeBuffer := True;
+    ResizeBuffer := true;
   end;
 
   if ResizeBuffer then
@@ -1298,7 +1239,7 @@ begin
   srWindow.Bottom := Short(srWindow.Top + Height - 1);
   srWindow.Right := Short(srWindow.Left + Width - 1);
 
-  if not SetConsoleWindowInfo(ConsoleOutputHandle, True, srWindow) then
+  if not SetConsoleWindowInfo(ConsoleOutputHandle, true, srWindow) then
   begin
     // Try to give a better error message here
     Size := GetLargestConsoleWindowSize(ConsoleOutputHandle);
@@ -1348,7 +1289,7 @@ begin
 
   CONSOLE_FONT_INFOEX.FontWeight := Cardinal(aFontWeight);
 
-  if not SetCurrentConsoleFontEx(FStdOut, FALSE, @CONSOLE_FONT_INFOEX) then
+  if not SetCurrentConsoleFontEx(FStdOut, false, @CONSOLE_FONT_INFOEX) then
     RaiseLastOSError;
 end;
 
@@ -1411,8 +1352,7 @@ begin
   WriteString(sLineBreak);
 end;
 
-class procedure Console.WriteColor(Value: Variant; Args: array of const;
-  aColors: array of TConsoleColor);
+class procedure Console.WriteColor(Value: Variant; Args: array of const; aColors: array of TConsoleColor);
 begin
   SetTempColor(aColors);
   try
@@ -1432,8 +1372,7 @@ begin
   end;
 end;
 
-class procedure Console.WriteColorLine(FormatString: String;
-  Args: array of Variant; aColors: array of TConsoleColor);
+class procedure Console.WriteColorLine(FormatString: String; Args: array of Variant; aColors: array of TConsoleColor);
 begin
   SetTempColor(aColors);
   try
@@ -1452,6 +1391,5 @@ begin
     ResetColor;
   end;
 end;
-
 
 end.

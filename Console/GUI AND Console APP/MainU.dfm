@@ -30,7 +30,7 @@ object FormMain: TFormMain
     Lines.Strings = (
       
         'When running this Application from the debugger or from Explorer' +
-        ' it acts like a norma GUI Application.'
+        ' it acts like a normal GUI Application.'
       ''
       
         'When running it from a console Window it will prompt out text to' +
@@ -39,6 +39,5 @@ object FormMain: TFormMain
       'This is all done in the DPR file')
     ParentFont = False
     TabOrder = 0
-    ExplicitHeight = 395
   end
 end
