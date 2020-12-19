@@ -52,6 +52,8 @@ var
   aConsole: Console;
   MyRecord: TMyRecord;
   Obj: TObject;
+  i,r: integer;
+  s: string;
 begin
   try
     WriteHeader('String');
@@ -105,6 +107,21 @@ begin
     finally
       Obj.Free;
     end;
+
+    WriteHeader('Random with color');
+    Randomize;
+    for i := 0 to 5 do
+      begin
+        Console.Write(Format('%d: ', [i]));
+        r := Random(5)-2;
+        s := Format('%2d',[r]);
+        if r <0 then
+          Console.WriteColorLine(s,[TConsoleColor.White, TConsoleColor.Red])
+        else if r=0 then
+          Console.WriteColorLine(s,[TConsoleColor.Yellow])
+        else
+          Console.WriteColorLine(s,[TConsoleColor.Green]);
+      end;
 
     WriteHeader('Record');
     Console.WriteLine(MyRecord);
